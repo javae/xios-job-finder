@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SavedSearchActivity" >
+    tools:context=".FavoritesActivity" >
 
     <ImageView
         android:id="@+id/imageView1"
@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/saved_searches"
-        android:contentDescription="@string/title_activity_saved_search" />
+        android:src="@drawable/misc_star"
+        android:contentDescription="@string/title_activity_favorites" />
 
     <TextView
         android:id="@+id/tv_title_saved_searches"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
         android:layout_toRightOf="@+id/imageView1"
-        android:text="@string/title_activity_saved_search"
+        android:text="@string/title_activity_favorites"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
@@ -37,5 +37,5 @@
         android:layout_below="@id/tv_title_saved_searches"
         android:background="#FF0000"
         android:text="No data" />
-
+    
 </RelativeLayout>
