@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Intent newSearch = new Intent(getApplicationContext(), SearchParams.class);
+			Intent newSearch = new Intent(getApplicationContext(), SearchBuilderActivity.class);
 			startActivity(newSearch);
 		}
     }

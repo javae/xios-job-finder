@@ -17,5 +17,16 @@
     
     <string name="on">ON</string>
     <string name="off">OFF</string>
+    <string name="title_activity_map">MapActivity</string>
+    
+<!--     Searchbuilder strings -->
+    <string name="keywords">Trefwoorden</string>
+    <string name="jobtitle">Functietitel</string>
+    <string name="country">Land</string>
+    <string name="postalcode">Postcode</string>
+    <string name="radius">In een straal van</string>
+    <string name="industry">Bedrijfstak</string>
+    <string name="functions">Functies</string>
+    <string name="search">Zoek</string>
 
 </resources>
