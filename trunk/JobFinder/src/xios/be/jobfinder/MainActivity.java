@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Intent savedSearches = new Intent(getApplicationContext(), SearchParams.class);
+			Intent savedSearches = new Intent(getApplicationContext(), SavedSearchActivity.class);
 			startActivity(savedSearches);
 		}
     }
