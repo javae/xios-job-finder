@@ -2,6 +2,7 @@ package xios.be.jobfinder;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 
 public class SearchParams extends Activity {
@@ -10,6 +11,7 @@ public class SearchParams extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_params);
+		Log.d("TEST","TEST");
 	}
 
 	@Override
