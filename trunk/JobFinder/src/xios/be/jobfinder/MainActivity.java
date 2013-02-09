@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Intent settings = new Intent(getApplicationContext(), SearchParams.class);
+			Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
 			startActivity(settings);
 		}
     }

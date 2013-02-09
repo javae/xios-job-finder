@@ -7,9 +7,15 @@
     <string name="title_activity_search_params">Nieuwe zoekopdracht</string>
     <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
     <string name="title_activity_favorites">Favorieten</string>
+    <string name="title_activity_settings">Instellingen</string>
     <string name="new_search">Nieuwe zoekopdracht</string>
     <string name="saved_searches">Bewaarde zoekopdrachten</string>
     <string name="favorites">Favorieten</string>
     <string name="settings">Instellingen</string>
+    
+    <string name="setting_new_job_warning">New job warning</string>
+    
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
 </resources>
