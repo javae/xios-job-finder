@@ -7,7 +7,7 @@
         android:switchTextOn="@string/on"
         android:switchTextOff="@string/off" />
     
-    <MultiSelectListPreference
+    
         
         
     
