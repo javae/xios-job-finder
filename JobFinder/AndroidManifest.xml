@@ -26,6 +26,14 @@
             android:name="xios.be.jobfinder.SearchParams"
             android:label="@string/title_activity_search_params" >
         </activity>
+        <activity
+            android:name="xios.be.jobfinder.SavedSearchActivity"
+            android:label="@string/title_activity_saved_search"
+            android:parentActivityName="android.app.ListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.app.ListActivity" />
+        </activity>
     </application>
 
 </manifest>
