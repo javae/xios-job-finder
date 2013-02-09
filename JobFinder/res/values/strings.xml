@@ -5,11 +5,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_search_params">Nieuwe zoekopdracht</string>
-    <string name="title_activity_saved_search">Saved searches</string>
-    <string name="new_search">New search</string>
-    <string name="saved_searches">Saved searches</string>
-    <string name="favorites">Favorites</string>
-    <string name="settings">Settings</string>
-    <string name="title_activity_favorites">Favorites</string>
+    <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
+    <string name="title_activity_favorites">Favorieten</string>
+    <string name="new_search">Nieuwe zoekopdracht</string>
+    <string name="saved_searches">Bewaarde zoekopdrachten</string>
+    <string name="favorites">Favorieten</string>
+    <string name="settings">Instellingen</string>
 
 </resources>
