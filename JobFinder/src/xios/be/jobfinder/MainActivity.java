@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Intent favorites = new Intent(getApplicationContext(), SearchParams.class);
+			Intent favorites = new Intent(getApplicationContext(), FavoritesActivity.class);
 			startActivity(favorites);
 		}
     }
