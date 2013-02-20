@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-    <SwitchPreference
-        android:key="display_alarm"
-        android:title="@string/setting_new_job_warning"
-        android:switchTextOn="@string/on"
-        android:switchTextOff="@string/off" />
-    
-    
-        
-        
-    
+
+    <PreferenceCategory
+        android:key="pref_display_alarm_settings"
+        android:title="@string/pref_display_alarm_title" >
+        <SwitchPreference
+            android:key="display_alarm"
+            android:switchTextOff="@string/off"
+            android:switchTextOn="@string/on"
+            android:title="@string/setting_new_job_warning" />
+
+        <ListPreference
+            android:dependency="display_alarm"
+            android:entries="@array/saved_searches"
+            android:entryValues="@array/saved_searches"
+            android:key="saved_search"
+            android:title="Saved searches" />
+
+        <be.xios.jobfinder.preference.TimePreference
+            android:name="Display alarm time"
+            android:dependency="display_alarm"
+            android:dialogLayout="@layout/time_preference"
+            android:key="@string/pref_display_alarm_title"
+            android:title="Display alarm time" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

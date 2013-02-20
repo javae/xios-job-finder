@@ -16,6 +16,13 @@
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="title_activity_map">MapActivity</string>
+    
+    <!-- Settings -->
+    <string name="pref_display_alarm_title">Display alarm</string>
+    <string-array name="saved_searches">
+        <item>Java Architect</item>
+        <item>Kassier</item>
+    </string-array>
 
     <!-- Searchbuilder strings -->
     <string name="keywords">Trefwoorden</string>
