@@ -1,6 +1,6 @@
 package be.xios.jobfinder;
 
-import xios.be.jobfinder.R;
+import be.xios.jobfinder.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

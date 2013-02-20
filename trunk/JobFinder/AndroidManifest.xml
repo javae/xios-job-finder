@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="xios.be.jobfinder"
+    package="be.xios.jobfinder"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -9,10 +9,10 @@
         android:targetSdkVersion="17" />
 
     <permission
-        android:name="xios.be.jobfinder.permission.MAPS_RECEIVE"
+        android:name="be.xios.jobfinder.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="xios.be.jobfinder.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="be.xios.jobfinder.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -29,7 +29,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="xios.be.jobfinder.MainActivity"
+            android:name="be.xios.jobfinder.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,15 +38,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="xios.be.jobfinder.SearchParams"
+            android:name="be.xios.jobfinder.SearchParams"
             android:label="@string/title_activity_search_params" >
         </activity>
         <activity
-            android:name="xios.be.jobfinder.SearchBuilderActivity"
+            android:name="be.xios.jobfinder.SearchBuilderActivity"
             android:label="@string/title_activity_search_params" >
         </activity>
         <activity
-            android:name="xios.be.jobfinder.SavedSearchActivity"
+            android:name="be.xios.jobfinder.SavedSearchActivity"
             android:label="@string/title_activity_saved_search"
             android:parentActivityName="android.app.ListActivity" >
             <meta-data
@@ -54,7 +54,7 @@
                 android:value="android.app.ListActivity" />
         </activity>
         <activity
-            android:name="xios.be.jobfinder.FavoritesActivity"
+            android:name="be.xios.jobfinder.FavoritesActivity"
             android:label="@string/title_activity_favorites"
             android:parentActivityName="android.app.ListActivity" >
             <meta-data
@@ -62,11 +62,11 @@
                 android:value="android.app.ListActivity" />
         </activity>
         <activity
-            android:name="xios.be.jobfinder.SettingsActivity"
+            android:name="be.xios.jobfinder.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="xios.be.jobfinder.MapActivity"
+            android:name="be.xios.jobfinder.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
 
