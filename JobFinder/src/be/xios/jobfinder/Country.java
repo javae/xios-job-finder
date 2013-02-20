@@ -1,4 +1,4 @@
-package xios.be.jobfinder;
+package be.xios.jobfinder;
 
 public class Country {
 	private String name;

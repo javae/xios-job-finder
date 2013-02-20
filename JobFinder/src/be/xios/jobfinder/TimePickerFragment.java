@@ -1,4 +1,4 @@
-package xios.be.jobfinder;
+package be.xios.jobfinder;
 
 import android.support.v4.app.DialogFragment;
 

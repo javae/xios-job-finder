@@ -1,5 +1,6 @@
-package xios.be.jobfinder;
+package be.xios.jobfinder;
 
+import xios.be.jobfinder.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
