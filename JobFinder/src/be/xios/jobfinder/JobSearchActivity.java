@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import xios.be.jobfinder.R;
+import be.xios.jobfinder.R;
 
 import be.xios.jobfinder.data.JobListAdapter;
 import be.xios.jobfinder.model.LinkedInJob;

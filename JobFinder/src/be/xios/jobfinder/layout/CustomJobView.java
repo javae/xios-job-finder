@@ -1,7 +1,7 @@
 package be.xios.jobfinder.layout;
 
 import be.xios.jobfinder.model.LinkedInJob;
-import xios.be.jobfinder.R;
+import be.xios.jobfinder.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
