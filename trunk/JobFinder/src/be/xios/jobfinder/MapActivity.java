@@ -1,4 +1,6 @@
-package xios.be.jobfinder;
+package be.xios.jobfinder;
+
+import xios.be.jobfinder.R;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

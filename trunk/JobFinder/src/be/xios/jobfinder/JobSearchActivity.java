@@ -1,4 +1,4 @@
-package xios.be.jobfinder;
+package be.xios.jobfinder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+
+import xios.be.jobfinder.R;
 
 import be.xios.jobfinder.data.JobListAdapter;
 import be.xios.jobfinder.model.LinkedInJob;
