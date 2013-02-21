@@ -1,6 +1,5 @@
 package be.xios.jobfinder.data;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import be.xios.jobfinder.R;
@@ -9,7 +8,6 @@ import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.util.JobFinderUtil;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
