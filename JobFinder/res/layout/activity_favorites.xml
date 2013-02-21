@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/no_favorites"
             android:src="@drawable/no_favorites" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_no_favorites"
             android:layout_centerHorizontal="true"
-            android:text="No favorites"
+            android:text="@string/no_favorites"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#999999" />
     </RelativeLayout>
