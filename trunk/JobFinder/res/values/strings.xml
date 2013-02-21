@@ -23,10 +23,13 @@
 
     <!-- Settings -->
     <string name="title_activity_settings">Instellingen</string>
-    <string name="pref_display_alarm_title">Toon alarm</string>
-    <string name="setting_new_job_warning">Waarschuwen nieuwe jobs</string>
+    <string name="pref_display_alarm_title">Automatische zoekopdracht</string>
+    <string name="setting_new_job_warning">Auto-zoeken</string>
+    <string name="summary_new_job_warning">Plan een dagelijkse zoekopdracht</string>
     <string name="on">AAN</string>
     <string name="off">UIT</string>
+    <string name="auto_saved_search">Bewaarde zoekopdracht</string>
+    <string name="time_task">Tijdstip zoekopdracht</string>
 
     <string-array name="saved_searches">
         <item>Java Architect</item>

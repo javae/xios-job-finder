@@ -8,21 +8,22 @@
             android:key="display_alarm"
             android:switchTextOff="@string/off"
             android:switchTextOn="@string/on"
-            android:title="@string/setting_new_job_warning" />
+            android:title="@string/setting_new_job_warning"
+            android:summary="@string/summary_new_job_warning" />
 
         <ListPreference
             android:dependency="display_alarm"
             android:entries="@array/saved_searches"
             android:entryValues="@array/saved_searches"
             android:key="saved_search"
-            android:title="Saved searches" />
+            android:title="@string/auto_saved_search" />
 
         <be.xios.jobfinder.preference.TimePreference
             android:name="Display alarm time"
             android:dependency="display_alarm"
             android:dialogLayout="@layout/time_preference"
             android:key="@string/pref_display_alarm_title"
-            android:title="Display alarm time" />
+            android:title="@string/time_task" />
     </PreferenceCategory>
 
 </PreferenceScreen>

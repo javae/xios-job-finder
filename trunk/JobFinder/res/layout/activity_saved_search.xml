@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/no_saved_searches"
             android:src="@drawable/no_saved_searches" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_no_saved_searches"
             android:layout_centerHorizontal="true"
-            android:text="No saved searches"
+            android:text="@string/no_saved_searches"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#999999" />
     </RelativeLayout>
