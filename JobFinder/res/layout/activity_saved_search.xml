@@ -4,38 +4,36 @@
     android:layout_height="match_parent"
     tools:context=".SavedSearchActivity" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/saved_searches"
-        android:contentDescription="@string/title_activity_saved_search" />
-
-    <TextView
-        android:id="@+id/tv_title_saved_searches"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
-        android:layout_toRightOf="@+id/imageView1"
-        android:text="@string/title_activity_saved_search"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title_saved_searches"
         android:background="#00FF00"
         android:drawSelectorOnTop="false" />
 
-    <TextView
+    <RelativeLayout
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title_saved_searches"
-        android:background="#FF0000"
-        android:text="No data" />
+        android:background="#CCCCCC" >
+
+        <ImageView
+            android:id="@+id/iv_no_saved_searches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/no_saved_searches" />
+
+        <TextView
+            android:id="@+id/tv_no_saved_searches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_no_saved_searches"
+            android:layout_centerHorizontal="true"
+            android:text="No saved searches"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#999999" />
+    </RelativeLayout>
 
 </RelativeLayout>
