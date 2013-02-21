@@ -5,20 +5,29 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_search_params">Nieuwe zoekopdracht</string>
-    <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
-    <string name="title_activity_favorites">Favorieten</string>
-    <string name="title_activity_settings">Instellingen</string>
+    <string name="title_activity_map">MapActivity</string>
+
+    <!-- Main -->
     <string name="new_search">Nieuwe zoekopdracht</string>
     <string name="saved_searches">Bewaarde zoekopdrachten</string>
     <string name="favorites">Favorieten</string>
     <string name="settings">Instellingen</string>
-    <string name="setting_new_job_warning">New job warning</string>
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
-    <string name="title_activity_map">MapActivity</string>
-    
+
+    <!-- Saved searches -->
+    <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
+    <string name="no_saved_searches">Geen bewaarde zoekopdrachten</string>
+
+    <!-- Favorites -->
+    <string name="title_activity_favorites">Favorieten</string>
+    <string name="no_favorites">Geen favorieten</string>
+
     <!-- Settings -->
-    <string name="pref_display_alarm_title">Display alarm</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="pref_display_alarm_title">Toon alarm</string>
+    <string name="setting_new_job_warning">Waarschuwen nieuwe jobs</string>
+    <string name="on">AAN</string>
+    <string name="off">UIT</string>
+
     <string-array name="saved_searches">
         <item>Java Architect</item>
         <item>Kassier</item>

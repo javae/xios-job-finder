@@ -35,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/btn_new_search"
         android:background="#FFFFFF"
-        android:drawableLeft="@drawable/misc_binoculars"
+        android:drawableLeft="@drawable/saved_searches"
         android:text="@string/saved_searches" />
     
     <Button
@@ -46,7 +46,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/btn_saved_searches"
         android:background="#FFFFFF"
-        android:drawableLeft="@drawable/misc_binoculars"
+        android:drawableLeft="@drawable/misc_star"
         android:text="@string/favorites" />
     
     <Button
@@ -57,7 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/btn_favorites"
         android:background="#FFFFFF"
-        android:drawableLeft="@drawable/misc_binoculars"
+        android:drawableLeft="@drawable/utilities_settings"
         android:text="@string/settings" />
 
 </RelativeLayout>
