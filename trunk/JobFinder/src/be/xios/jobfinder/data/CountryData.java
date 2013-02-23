@@ -1,4 +1,4 @@
-package be.xios.jobfinder;
+package be.xios.jobfinder.data;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,6 +3,7 @@ package be.xios.jobfinder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -41,48 +42,43 @@ public class JobSearchActivity extends ListActivity {
 	}
 	
 	public List<LinkedInJob> createTestData() throws ParseException {
-		List<LinkedInJob> testData = new ArrayList<LinkedInJob>();
+List<LinkedInJob> testData = new ArrayList<LinkedInJob>();
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD", Locale.getDefault());
 		
 		int id = 1;
 		String positionTitle = "position1";
 		String companyName = "company1";
-		String location = "location1";
-		GregorianCalendar postingDate = new GregorianCalendar();
-		postingDate.setTime(format.parse("2013-02-13"));
+		String location = "Brussel";
+		Date postingDate = format.parse("2013-02-13");
 		LinkedInJob job1 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
 		
 		id = 2;
 		positionTitle = "position2";
 		companyName = "company2";
-		location = "location2";
-		postingDate = new GregorianCalendar();
-		postingDate.setTime(format.parse("2013-02-14"));
+		location = "Leuven";
+		postingDate = format.parse("2013-02-14");
 		LinkedInJob job2 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
 		
 		id = 3;
 		positionTitle = "position3";
 		companyName = "company3";
-		location = "location3";
-		postingDate = new GregorianCalendar();
-		postingDate.setTime(format.parse("2013-02-15"));
+		location = "Diestesteenweg 304, Kessel-Lo";
+		postingDate = format.parse("2013-02-15");
 		LinkedInJob job3 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
 		
 		id = 4;
 		positionTitle = "position4";
 		companyName = "company4";
-		location = "location4";
-		postingDate = new GregorianCalendar();
-		postingDate.setTime(format.parse("2013-02-16"));
+		location = "Aarschot";
+		postingDate = format.parse("2013-02-16");
 		LinkedInJob job4 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
 		
 		id = 5;
 		positionTitle = "position5";
 		companyName = "company5";
-		location = "location5";
-		postingDate = new GregorianCalendar();
-		postingDate.setTime(format.parse("2013-02-17"));
+		location = "Brussels Area";
+		postingDate = format.parse("2013-02-17");
 		LinkedInJob job5 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
 		
 		testData.add(job1);

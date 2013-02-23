@@ -69,15 +69,18 @@
             android:name="be.xios.jobfinder.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBytipj_EiKWUOn67_l0U8l3I8KqAopk9k" />
-
         <activity
             android:name="be.xios.jobfinder.JobSearchActivity"
             android:label="@string/title_activity_job_search" >
         </activity>
+        <activity
+            android:name="be.xios.jobfinder.JobDetailActivity"
+            android:label="@string/title_activity_job_detail" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBsXTZT3C69TQHHTygw4dEl4qlXCdKk1xA" />
     </application>
 
 </manifest>
