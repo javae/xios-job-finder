@@ -46,5 +46,11 @@
     <string name="functions">Functies</string>
     <string name="search">Zoek</string>
     <string name="title_activity_job_search">JobSearchActivity</string>
+    <string name="title_activity_job_detail">Vacature Detail</string>
+
+    <!-- Jobdetails -->
+    <string name="jd_jobdesc">Vacatureomschrijving</string>
+    <string name="jd_wantedskills">Gewenste vaardigheden &amp; ervaring</string>
+    <string name="jd_companydesc">Beschrijving van het bedrijf</string>
 
 </resources>
