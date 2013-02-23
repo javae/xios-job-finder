@@ -1,7 +1,6 @@
 package be.xios.jobfinder.model;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import android.os.Parcel;
 import android.os.Parcelable;
