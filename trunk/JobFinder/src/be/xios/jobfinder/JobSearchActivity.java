@@ -34,6 +34,9 @@ public class JobSearchActivity extends ListActivity {
 		
 		// retrieve SearchBuilder object from SearchBuilderActivity through intents
 		
+		// Bundle bundle = getIntent().getExtras();
+		// SearchBuilder searchBuilder = bundle.getParcelable("searchdata");
+
 		SearchBuilder searchBuilder = new SearchBuilder();
 		searchBuilder.setKeywords("java, management, oracle");
 		

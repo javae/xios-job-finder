@@ -1,7 +1,10 @@
 package be.xios.jobfinder.model;
 
-public class SearchBuilder {
-	
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SearchBuilder implements Parcelable {
+
 	private String keywords;
 	private String jobTitle;
 	private String countryCode;
@@ -9,8 +12,18 @@ public class SearchBuilder {
 	private int distance;
 	private String industry;
 	private String jobFunction;
-	
+
 	public SearchBuilder() {
+	}
+
+	public SearchBuilder(Parcel in) {
+		keywords = in.readString();
+		jobTitle = in.readString();
+		countryCode = in.readString();
+		postalCode = in.readString();
+		distance = in.readInt();
+		industry = in.readString();
+		jobFunction = in.readString();
 	}
 
 	public String getKeywords() {
@@ -68,4 +81,35 @@ public class SearchBuilder {
 	public void setJobFunction(String jobFunction) {
 		this.jobFunction = jobFunction;
 	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(keywords);
+		dest.writeString(jobTitle);
+		dest.writeString(countryCode);
+		dest.writeString(postalCode);
+		dest.writeInt(distance);
+		dest.writeString(industry);
+		dest.writeString(jobFunction);
+
+	}
+
+	public static final Parcelable.Creator<SearchBuilder> CREATOR = new Parcelable.Creator<SearchBuilder>() {
+
+		@Override
+		public SearchBuilder createFromParcel(Parcel in) {
+			return new SearchBuilder(in);
+		}
+
+		@Override
+		public SearchBuilder[] newArray(int size) {
+			return new SearchBuilder[0];
+		}
+	};
 }

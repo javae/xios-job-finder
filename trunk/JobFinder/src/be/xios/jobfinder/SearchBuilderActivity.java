@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +28,12 @@ import android.view.View.OnLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import be.xios.jobfinder.data.Country;
 import be.xios.jobfinder.data.CountryData;
 import be.xios.jobfinder.model.LinkedInJob;
+import be.xios.jobfinder.model.SearchBuilder;
 
 public class SearchBuilderActivity extends Activity {
 
@@ -106,6 +109,12 @@ public class SearchBuilderActivity extends Activity {
 			case R.id.btnSearch:
 				Intent searchInt = new Intent(getApplicationContext(),
 						JobSearchActivity.class);
+
+				SearchBuilder sb = createSearchBuilderFromForm();
+				Bundle b = new Bundle();
+				b.putParcelable("searchdata", sb);
+				searchInt.putExtras(b);
+
 				startActivity(searchInt);
 				break;
 			case R.id.btnGetLocation:
@@ -118,74 +127,108 @@ public class SearchBuilderActivity extends Activity {
 
 		}
 	}
-	
+
+	private SearchBuilder createSearchBuilderFromForm() {
+		SearchBuilder sb = new SearchBuilder();
+
+		EditText et = (EditText) findViewById(R.id.etKeywords);
+		String keywords = et.getText().toString();
+		et = (EditText) findViewById(R.id.etJobTitle);
+		String jobtitle = et.getText().toString();
+		Spinner sp = (Spinner) findViewById(R.id.spCountry);
+		String country = sp.getSelectedItem().toString();
+		SeekBar sbDist = (SeekBar) findViewById(R.id.sbDistance);
+		int dist = sbDist.getProgress();
+		sp = (Spinner) findViewById(R.id.spFunctions);
+		String function = sp.getSelectedItem().toString();
+		sp = (Spinner) findViewById(R.id.spIndustry);
+		String industry = sp.getSelectedItem().toString();
+
+		sb.setKeywords(keywords);
+		sb.setJobTitle(jobtitle);
+		sb.setCountryCode(country);
+		sb.setDistance(dist);
+		sb.setJobFunction(function);
+		sb.setIndustry(industry);
+
+		return sb;
+	}
+
 	private List<LinkedInJob> createTestData() throws ParseException {
 		List<LinkedInJob> testData = new ArrayList<LinkedInJob>();
-		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD", Locale.getDefault());
-		
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD",
+				Locale.getDefault());
+
 		int id = 1;
 		String positionTitle = "position1";
 		String companyName = "company1";
 		String location = "Brussel";
 		Date postingDate = format.parse("2013-02-13");
-		LinkedInJob job1 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
-		
+		LinkedInJob job1 = new LinkedInJob(id, positionTitle, companyName,
+				location, postingDate);
+
 		id = 2;
 		positionTitle = "position2";
 		companyName = "company2";
 		location = "Leuven";
 		postingDate = format.parse("2013-02-14");
-		LinkedInJob job2 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
-		
+		LinkedInJob job2 = new LinkedInJob(id, positionTitle, companyName,
+				location, postingDate);
+
 		id = 3;
 		positionTitle = "position3";
 		companyName = "company3";
 		location = "Diestesteenweg 304, Kessel-Lo";
 		postingDate = format.parse("2013-02-15");
-		LinkedInJob job3 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
-		
+		LinkedInJob job3 = new LinkedInJob(id, positionTitle, companyName,
+				location, postingDate);
+
 		id = 4;
 		positionTitle = "position4";
 		companyName = "company4";
 		location = "Aarschot";
 		postingDate = format.parse("2013-02-16");
-		LinkedInJob job4 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
-		
+		LinkedInJob job4 = new LinkedInJob(id, positionTitle, companyName,
+				location, postingDate);
+
 		id = 5;
 		positionTitle = "position5";
 		companyName = "company5";
 		location = "Brussels Area";
 		postingDate = format.parse("2013-02-17");
-		LinkedInJob job5 = new LinkedInJob(id, positionTitle, companyName, location, postingDate);
-		
+		LinkedInJob job5 = new LinkedInJob(id, positionTitle, companyName,
+				location, postingDate);
+
 		testData.add(job1);
 		testData.add(job2);
 		testData.add(job3);
 		testData.add(job4);
 		testData.add(job5);
-		
+
 		return testData;
 	}
-	
+
 	private class LongClickHandler implements OnLongClickListener {
 
 		@Override
 		public boolean onLongClick(View v) {
 			List<LinkedInJob> jobListings = null;
 			Bundle b = new Bundle();
-			Intent mapInt = new Intent(getApplicationContext(), MapActivity.class);
+			Intent mapInt = new Intent(getApplicationContext(),
+					MapActivity.class);
 			try {
 				jobListings = createTestData();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			b.putParcelableArrayList("data", (ArrayList<? extends Parcelable>) jobListings);
+			b.putParcelableArrayList("data",
+					(ArrayList<? extends Parcelable>) jobListings);
 			mapInt.putExtras(b);
 			startActivity(mapInt);
 			return false;
 		}
-		
+
 	}
 }
