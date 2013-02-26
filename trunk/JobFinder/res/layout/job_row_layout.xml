@@ -8,8 +8,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Large Text"
+        android:text="job_title"
+        android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -17,8 +19,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/tv_job_title"
-        android:text="Medium Text"
+        android:text="company_name_location"
+        android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
@@ -26,8 +30,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/tv_company_name_location"
-        android:text="Small Text"
+        android:text="job_posting_date"
+        android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
