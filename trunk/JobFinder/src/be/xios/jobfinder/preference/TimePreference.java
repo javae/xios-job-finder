@@ -2,6 +2,7 @@ package be.xios.jobfinder.preference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import be.xios.jobfinder.R;
@@ -73,5 +74,14 @@ public class TimePreference extends DialogPreference {
 	private String getFormattedTime(int hour, int minute) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		return DateFormat.getTimeFormat(getContext()).format(format.parse(hour + ":" + minute));
+	}
+	
+	public Date getTime() throws ParseException {
+		SharedPreferences preferences = getSharedPreferences();
+		int hour = preferences.getInt(getKey() + ".hour", 8);
+		int minute = preferences.getInt(getKey() + ".minute", 30);
+		
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		return format.parse(hour + ":" + minute);
 	}
 }
