@@ -1,15 +1,11 @@
 package be.xios.jobfinder;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import org.scribe.model.Verb;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +15,6 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
@@ -35,23 +30,13 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import be.xios.jobfinder.connector.LinkedInConnector;
 import be.xios.jobfinder.data.Country;
 import be.xios.jobfinder.data.CountryData;
-import be.xios.jobfinder.json.LinkedInCompanyParser;
-import be.xios.jobfinder.json.LinkedInJobDetailParser;
 import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
-import be.xios.jobfinder.util.JobFinderUtil;
 
 public class SearchBuilderActivity extends Activity {
 
-	private Spinner jobFunctions;
-	private Spinner industries;
-	
-	private List<String> jobFunctionTexts;
-	private List<String> industrieTexts;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,11 +51,6 @@ public class SearchBuilderActivity extends Activity {
 
 		SeekBar sbDistance = (SeekBar) findViewById(R.id.sbDistance);
 		sbDistance.setOnSeekBarChangeListener(new SeekBarHandler());
-		
-		jobFunctions = (Spinner) findViewById(R.id.spFunctions);
-		industries = (Spinner) findViewById(R.id.spIndustry);
-		
-		
 	}
 
 	@Override
@@ -160,14 +140,16 @@ public class SearchBuilderActivity extends Activity {
 		et = (EditText) findViewById(R.id.etJobTitle);
 		String jobtitle = et.getText().toString();
 		Spinner sp = (Spinner) findViewById(R.id.spCountry);
-		String country = JobFinderUtil.getDisplayString(sp.getSelectedItem());
+		String country = CountryData.getCountryList().get(sp.getSelectedItemPosition()).getIso2();
+		
 		SeekBar sbDist = (SeekBar) findViewById(R.id.sbDistance);
 		// distance from kilometer to miles
-		int dist = (int) (sbDist.getProgress() * 0.621371);
+		// * 5 so it is the same as in the label
+		int dist = (int) ((sbDist.getProgress() * 5) * 0.621371);
 		sp = (Spinner) findViewById(R.id.spFunctions);
-		String function = JobFinderUtil.getDisplayString(sp.getSelectedItem());
+		String function = getResources().getStringArray(R.array.job_function_codes)[sp.getSelectedItemPosition()];
 		sp = (Spinner) findViewById(R.id.spIndustry);
-		String industry = JobFinderUtil.getDisplayString(sp.getSelectedItem());
+		String industry = getResources().getStringArray(R.array.industry_codes)[sp.getSelectedItemPosition()];
 
 		sb.setKeywords(keywords);
 		sb.setJobTitle(jobtitle);
@@ -287,35 +269,4 @@ public class SearchBuilderActivity extends Activity {
 
 	}
 	
-	/*
-	private class RetrieveLinkedInStaticValues extends AsyncTask<Void, Void, Void> {
-
-		private String url = ""
-		
-		@Override
-		protected Void doInBackground(Void... params) {
-			LinkedInConnector connector = new LinkedInConnector();
-			InputStream in = connector.sendRequest(Verb.GET, url);
-			
-			LinkedInJobDetailParser jobDetailParser = new LinkedInJobDetailParser();
-			try {
-				jobDetail = jobDetailParser.readJobDetailStream(in);
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-			
-			url = companyBaseUrl + jobDetail.getCompanyId() + companyFieldsUrl;
-			in = connector.sendRequest(Verb.GET, url);
-			LinkedInCompanyParser companyParser = new LinkedInCompanyParser();
-			try {
-				jobDetail.setCompanyDescription(companyParser.readJobDetailStream(in));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			return null;
-		}
-		
-	}
-	*/
 }
