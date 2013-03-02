@@ -16,10 +16,19 @@
     <!-- Saved searches -->
     <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
     <string name="no_saved_searches">Geen bewaarde zoekopdrachten gevonden.</string>
+    
+    <!-- Saved searches menu -->
+    <string name="menu_delete">Verwijder</string>
 
     <!-- Favorites -->
     <string name="title_activity_favorites">Favoriete jobs</string>
     <string name="no_favorites">Geen favoriete jobs gevonden.</string>
+        
+    <!-- JobDetail Menu -->
+    <string name="add_favorite">Favoriet</string>
+    
+    <!-- SearchResult Menu -->
+    <string name="menu_saveSearch">Bewaar zoekopdracht</string>
 
     <!-- Settings -->
     <string name="title_activity_settings">Instellingen</string>
