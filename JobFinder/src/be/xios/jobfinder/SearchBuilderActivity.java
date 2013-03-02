@@ -5,11 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +18,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.provider.SyncStateContract.Constants;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,16 +25,19 @@ import android.view.View.OnLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 import be.xios.jobfinder.data.Country;
 import be.xios.jobfinder.data.CountryData;
 import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
+import be.xios.jobfinder.util.JobFinderUtil;
 
 public class SearchBuilderActivity extends Activity {
-
-	// private Button btnSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,11 @@ public class SearchBuilderActivity extends Activity {
 		Button btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new ButtonHandler());
 		btnSearch.setOnLongClickListener(new LongClickHandler());
-		Button btnGetPC = (Button) findViewById(R.id.btnGetLocation);
+		ImageButton btnGetPC = (ImageButton) findViewById(R.id.btnGetLocation);
 		btnGetPC.setOnClickListener(new ButtonHandler());
+
+		SeekBar sbDistance = (SeekBar) findViewById(R.id.sbDistance);
+		sbDistance.setOnSeekBarChangeListener(new SeekBarHandler());
 	}
 
 	@Override
@@ -60,7 +63,8 @@ public class SearchBuilderActivity extends Activity {
 	}
 
 	private String getPostalCodeFromCurrentLocation() {
-		String postalCode = "Not found";
+		String postalCode = null;
+		String countryCode = null;
 
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -82,10 +86,12 @@ public class SearchBuilderActivity extends Activity {
 
 			if (addresses.size() > 0) {
 				postalCode = addresses.get(0).getPostalCode();
+				// TODO set spinner to found country
+				countryCode = addresses.get(0).getCountryCode();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), "Locatie kon niet worden bepaald.", Toast.LENGTH_SHORT).show();
+			//e.printStackTrace();
 		}
 		return postalCode;
 
@@ -108,7 +114,7 @@ public class SearchBuilderActivity extends Activity {
 			switch (v.getId()) {
 			case R.id.btnSearch:
 				Intent searchInt = new Intent(getApplicationContext(),
-						JobSearchActivity.class);
+						SearchResultActivity.class);
 
 				SearchBuilder sb = createSearchBuilderFromForm();
 				Bundle b = new Bundle();
@@ -136,13 +142,14 @@ public class SearchBuilderActivity extends Activity {
 		et = (EditText) findViewById(R.id.etJobTitle);
 		String jobtitle = et.getText().toString();
 		Spinner sp = (Spinner) findViewById(R.id.spCountry);
-		String country = sp.getSelectedItem().toString();
+		String country = JobFinderUtil.getDisplayString(sp.getSelectedItem());
 		SeekBar sbDist = (SeekBar) findViewById(R.id.sbDistance);
-		int dist = sbDist.getProgress();
+		// distance from kilometer to miles
+		int dist = (int) (sbDist.getProgress() * 0.621371);
 		sp = (Spinner) findViewById(R.id.spFunctions);
-		String function = sp.getSelectedItem().toString();
+		String function = JobFinderUtil.getDisplayString(sp.getSelectedItem());
 		sp = (Spinner) findViewById(R.id.spIndustry);
-		String industry = sp.getSelectedItem().toString();
+		String industry = JobFinderUtil.getDisplayString(sp.getSelectedItem());
 
 		sb.setKeywords(keywords);
 		sb.setJobTitle(jobtitle);
@@ -207,6 +214,36 @@ public class SearchBuilderActivity extends Activity {
 		testData.add(job5);
 
 		return testData;
+	}
+
+	private class SeekBarHandler implements OnSeekBarChangeListener {
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress,
+				boolean fromUser) {
+			TextView tvDistance = (TextView) findViewById(R.id.tvDistValue);
+
+			if (progress == 0) {
+				tvDistance.setText("");
+			} else {
+				int distance = progress * 5;
+				tvDistance.setText(" " + distance + " km");
+			}
+
+		}
+
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 	private class LongClickHandler implements OnLongClickListener {
