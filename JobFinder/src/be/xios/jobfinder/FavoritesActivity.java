@@ -1,12 +1,23 @@
 package be.xios.jobfinder;
 
+import java.util.List;
+
+import be.xios.jobfinder.data.JobFinderDAO;
+import be.xios.jobfinder.model.LinkedInJob;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.support.v4.app.NavUtils;
 
-public class FavoritesActivity extends Activity {
+public class FavoritesActivity extends ListActivity {
+
+	private JobFinderDAO datasource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +26,15 @@ public class FavoritesActivity extends Activity {
 		setTitle(R.string.title_activity_favorites);
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		datasource = new JobFinderDAO(getApplicationContext());
+		datasource.open();
+
+		List<LinkedInJob> values = datasource.getAllFavJobs();
+		ArrayAdapter<LinkedInJob> adapter = new ArrayAdapter<LinkedInJob>(this,
+				android.R.layout.simple_list_item_1, values);
+		setListAdapter(adapter);
+		registerForContextMenu(getListView());
 	}
 
 	@Override
@@ -41,4 +61,29 @@ public class FavoritesActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void onResume() {
+		datasource.open();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		datasource.close();
+		super.onPause();
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Intent jobDetailIntent = new Intent(getApplicationContext(),
+				JobDetailActivity.class);
+		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
+
+		Bundle b = new Bundle();
+		b.putParcelable("selectedJob", job);
+
+		jobDetailIntent.putExtras(b);
+		startActivity(jobDetailIntent);
+	}
 }

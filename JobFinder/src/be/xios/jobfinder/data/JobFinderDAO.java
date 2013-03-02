@@ -1,7 +1,10 @@
 package be.xios.jobfinder.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,7 +32,9 @@ public class JobFinderDAO {
 	private String[] allFavColumns = { JobFinderDB.JobFavorites.COL_ID,
 			JobFinderDB.JobFavorites.COL_LI_ID,
 			JobFinderDB.JobFavorites.COL_POSITION_TITLE,
-			JobFinderDB.JobFavorites.COL_COMPANY_NAME };
+			JobFinderDB.JobFavorites.COL_COMPANY_NAME,
+			JobFinderDB.JobFavorites.COL_LOCATION,
+			JobFinderDB.JobFavorites.COL_POSTING_DATE };
 
 	public JobFinderDAO(Context context) {
 		dbHelper = new MySQLiteHelper(context);
@@ -43,7 +48,7 @@ public class JobFinderDAO {
 		dbHelper.close();
 	}
 
-	public SearchBuilder createSavedSearch(SearchBuilder currentSearch) {
+	public long createSavedSearch(SearchBuilder currentSearch) {
 		ContentValues values = new ContentValues();
 		values.put(JobFinderDB.SavedSearches.COL_KEYWORDS,
 				currentSearch.getKeywords());
@@ -62,33 +67,41 @@ public class JobFinderDAO {
 
 		long insertId = database.insert(JobFinderDB.SavedSearches.TABLE_NAME,
 				null, values);
-		Cursor cursor = database.query(JobFinderDB.SavedSearches.TABLE_NAME,
-				allSavedSearchColumns, JobFinderDB.SavedSearches.COL_ID + " = "
-						+ insertId, null, null, null, null);
-		cursor.moveToFirst();
-		SearchBuilder newSavedSearch = cursorToSearchBuilder(cursor);
-		cursor.close();
-		return newSavedSearch;
+		return insertId;
+
+		// Cursor cursor = database.query(JobFinderDB.SavedSearches.TABLE_NAME,
+		// allSavedSearchColumns, JobFinderDB.SavedSearches.COL_ID + " = "
+		// + insertId, null, null, null, null);
+		// cursor.moveToFirst();
+		// SearchBuilder newSavedSearch = cursorToSearchBuilder(cursor);
+		// cursor.close();
+		// return newSavedSearch;
 	}
 
-	public LinkedInJob createFavoriteJob(LinkedInJob currentJob) {
+	public long createFavoriteJob(LinkedInJob currentJob) {
 		ContentValues values = new ContentValues();
 		values.put(JobFinderDB.JobFavorites.COL_LI_ID, currentJob.getId());
 		values.put(JobFinderDB.JobFavorites.COL_POSITION_TITLE,
 				currentJob.getPositionTitle());
 		values.put(JobFinderDB.JobFavorites.COL_COMPANY_NAME,
 				currentJob.getCompanyName());
+		values.put(JobFinderDB.JobFavorites.COL_LOCATION,
+				currentJob.getLocation());
+		values.put(JobFinderDB.JobFavorites.COL_POSTING_DATE, currentJob
+				.getPostingDate().toString());
 
 		long insertId = database.insert(JobFinderDB.JobFavorites.TABLE_NAME,
 				null, values);
 
-		Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,
-				allFavColumns, JobFinderDB.JobFavorites.COL_ID + " = "
-						+ insertId, null, null, null, null);
-		cursor.moveToFirst();
-		LinkedInJob newFavJob = cursorToLinkedInJob(cursor);
-		cursor.close();
-		return newFavJob;
+		return insertId;
+
+		// Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,
+		// allFavColumns, JobFinderDB.JobFavorites.COL_ID + " = "
+		// + insertId, null, null, null, null);
+		// cursor.moveToFirst();
+		// LinkedInJob newFavJob = cursorToLinkedInJob(cursor);
+		// cursor.close();
+		// return newFavJob;
 	}
 
 	public void deleteSavedSearch(SearchBuilder savedSearch) {
@@ -142,7 +155,7 @@ public class JobFinderDAO {
 	private SearchBuilder cursorToSearchBuilder(Cursor cursor) {
 		SearchBuilder savedsearch = new SearchBuilder();
 
-		// savedsearch.setId(cursor.getLong(0));
+		savedsearch.setDbId(cursor.getLong(0));
 		savedsearch.setKeywords(cursor.getString(1));
 		savedsearch.setJobTitle(cursor.getString(2));
 		savedsearch.setCountryCode(cursor.getString(3));
@@ -157,10 +170,20 @@ public class JobFinderDAO {
 	private LinkedInJob cursorToLinkedInJob(Cursor cursor) {
 		LinkedInJob favJob = new LinkedInJob();
 
-		// favJob.setDbId(cursor.getLong(0));
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD",
+				Locale.getDefault());
+
+		favJob.setDbId(cursor.getLong(0));
 		favJob.setId(cursor.getInt(1)); // = linkedinjobID
 		favJob.setPositionTitle(cursor.getString(2));
 		favJob.setCompanyName(cursor.getString(3));
+		favJob.setLocation(cursor.getString(4));
+		try {
+			favJob.setPostingDate(format.parse(cursor.getString(5)));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return favJob;
 	}

@@ -35,8 +35,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		sqlCreate = "CREATE TABLE " + JobFinderDB.JobFavorites.TABLE_NAME + "("
 				+ JobFinderDB.JobFavorites.COL_ID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ JobFinderDB.JobFavorites.COL_LI_ID + " TEXT,"
 				+ JobFinderDB.JobFavorites.COL_POSITION_TITLE + " TEXT,"
-				+ JobFinderDB.JobFavorites.COL_COMPANY_NAME + " TEXT)";
+				+ JobFinderDB.JobFavorites.COL_COMPANY_NAME + " TEXT,"
+				+ JobFinderDB.JobFavorites.COL_LOCATION + " TEXT,"
+				+ JobFinderDB.JobFavorites.COL_POSTING_DATE + " TEXT)";
 
 		try {
 			db.execSQL(sqlCreate);

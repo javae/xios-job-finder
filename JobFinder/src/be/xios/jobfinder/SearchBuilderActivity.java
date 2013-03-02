@@ -116,7 +116,7 @@ public class SearchBuilderActivity extends Activity {
 
 				SearchBuilder sb = createSearchBuilderFromForm();
 				Bundle b = new Bundle();
-				b.putParcelable("searchdata", sb);
+				b.putParcelable(SearchResultActivity.SEARCH_PARAMS, sb);
 				searchInt.putExtras(b);
 
 				startActivity(searchInt);

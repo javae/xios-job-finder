@@ -11,12 +11,12 @@ public class JobFinderDB {
 		public static final String TABLE_NAME = "savedsearches";
 		public static final String COL_ID = "_id";
 		public static final String COL_KEYWORDS = "keywords";
-		public static final String COL_JOBTITLE = "jobTitle";
-		public static final String COL_COUNTRYCODE = "countryCode";
-		public static final String COL_POSTALCODE = "postalCode";
+		public static final String COL_JOBTITLE = "jobtitle";
+		public static final String COL_COUNTRYCODE = "countrycode";
+		public static final String COL_POSTALCODE = "postalcode";
 		public static final String COL_DISTANCE = "distance";
 		public static final String COL_INDUSTRY = "industry";
-		public static final String COL_JOBFUNCTION = "jobFunction";
+		public static final String COL_JOBFUNCTION = "jobfunction";
 	}
 
 	public static final class JobFavorites implements BaseColumns {
@@ -24,8 +24,10 @@ public class JobFinderDB {
 		public static final String TABLE_NAME = "favoritejobs";
 		public static final String COL_ID = "_id";
 		public static final String COL_LI_ID = "linkedinID";
-		public static final String COL_POSITION_TITLE = "positionTitle";
-		public static final String COL_COMPANY_NAME = "companyName";
+		public static final String COL_POSITION_TITLE = "positiontitle";
+		public static final String COL_COMPANY_NAME = "companyname";
+		public static final String COL_LOCATION = "location";
+		public static final String COL_POSTING_DATE = "postingdate";
 	}
 
 }

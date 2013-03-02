@@ -4,13 +4,17 @@ import java.util.List;
 
 import be.xios.jobfinder.R;
 import be.xios.jobfinder.data.JobFinderDAO;
+import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.support.v4.app.NavUtils;
 
 public class SavedSearchActivity extends ListActivity {
@@ -68,4 +72,18 @@ public class SavedSearchActivity extends ListActivity {
 	    super.onPause();
 	  }
 
+	  @Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		Intent searchInt = new Intent(getApplicationContext(),
+				SearchResultActivity.class);
+
+		SearchBuilder sb = (SearchBuilder) l.getAdapter().getItem(position);
+		Bundle b = new Bundle();
+		b.putParcelable(SearchResultActivity.SEARCH_PARAMS, sb);
+		searchInt.putExtras(b);
+
+		startActivity(searchInt);
+	}
 }

@@ -2,8 +2,12 @@ package be.xios.jobfinder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.scribe.model.Verb;
 
@@ -12,28 +16,35 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import be.xios.jobfinder.connector.LinkedInConnector;
+import be.xios.jobfinder.data.JobFinderDAO;
 import be.xios.jobfinder.data.JobListAdapter;
 import be.xios.jobfinder.json.LinkedInJobParser;
 import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
 
 public class SearchResultActivity extends ListActivity {
-
-	private JobListAdapter jobListAdapter;
 	
+	public static final String SEARCH_PARAMS = "search_parameters";  
+	private JobListAdapter jobListAdapter;
+	private SearchBuilder searchData;
+	private JobFinderDAO datasource;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Bundle bundle = getIntent().getExtras();
-		SearchBuilder searchBuilder = bundle.getParcelable("searchdata");
 
-		jobListAdapter = new JobListAdapter(getApplicationContext(), new ArrayList<LinkedInJob>());
+		Bundle bundle = getIntent().getExtras();
+		searchData = bundle.getParcelable(SEARCH_PARAMS);
+
+		jobListAdapter = new JobListAdapter(getApplicationContext(),
+				new ArrayList<LinkedInJob>());
 		LinkedInJobSearch search = new LinkedInJobSearch(jobListAdapter);
-		search.execute(searchBuilder);
+		search.execute(searchData);
 
 		setListAdapter(jobListAdapter);
 	}
@@ -41,35 +52,66 @@ public class SearchResultActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_job_search, menu);
+		getMenuInflater().inflate(R.menu.activity_search_result, menu);
 		return true;
 	}
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_save_searchparams:
+
+			datasource = new JobFinderDAO(getApplicationContext());
+			datasource.open();
+			long newID = datasource.createSavedSearch(searchData);
+			if (newID > 0) {
+				Toast.makeText(getApplicationContext(),
+						"Favoriet toegevoegd met ID " + newID,
+						Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"Favoriet toevoegen mislukt", Toast.LENGTH_LONG).show();
+			}
+
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
+		Intent jobDetailIntent = new Intent(getApplicationContext(),
+				JobDetailActivity.class);
 		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
-		Intent jobDetailIntent = new Intent(getApplicationContext(), JobDetailActivity.class);
-		jobDetailIntent.putExtra(JobDetailActivity.JOB_ID, job.getId());
+
+		Bundle b = new Bundle();
+		b.putParcelable("selectedJob", job);
+
+		jobDetailIntent.putExtras(b);
 		startActivity(jobDetailIntent);
 	}
-	
-	private class LinkedInJobSearch extends AsyncTask<SearchBuilder, Void, List<LinkedInJob>> {
+
+	private class LinkedInJobSearch extends
+			AsyncTask<SearchBuilder, Void, List<LinkedInJob>> {
 
 		String url = "http://api.linkedin.com/v1/job-search:(jobs:(id,posting-timestamp,company:(name),position:(title,location)))";
 		JobListAdapter jobListAdapter;
-		
+
 		public LinkedInJobSearch(JobListAdapter jobListAdapter) {
 			this.jobListAdapter = jobListAdapter;
 		}
-		
+
 		@Override
 		protected List<LinkedInJob> doInBackground(SearchBuilder... params) {
 			List<LinkedInJob> jobs = new ArrayList<LinkedInJob>();
-			
+
 			LinkedInConnector connector = new LinkedInConnector();
 			InputStream in = connector.sendRequest(Verb.GET, url, params[0]);
-			
+
 			LinkedInJobParser parser = new LinkedInJobParser();
 			try {
 				jobs = parser.readJsonStream(in);
@@ -78,14 +120,14 @@ public class SearchResultActivity extends ListActivity {
 			}
 			return jobs;
 		}
-		
+
 		@Override
 		protected void onPostExecute(List<LinkedInJob> result) {
 			super.onPostExecute(result);
-			
+
 			jobListAdapter.addAll(result);
 			jobListAdapter.notifyDataSetChanged();
 		}
 	}
-	
+
 }
