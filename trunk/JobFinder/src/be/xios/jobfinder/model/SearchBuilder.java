@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class SearchBuilder implements Parcelable {
 
-	private long id;
+	private long dbId;
 	private String keywords;
 	private String jobTitle;
 	private String countryCode;
@@ -18,7 +18,7 @@ public class SearchBuilder implements Parcelable {
 	}
 
 	public SearchBuilder(Parcel in) {
-		id = in.readLong();
+		dbId = in.readLong();
 		keywords = in.readString();
 		jobTitle = in.readString();
 		countryCode = in.readString();
@@ -28,12 +28,12 @@ public class SearchBuilder implements Parcelable {
 		jobFunction = in.readString();
 	}
 
-	public long getId() {
-		return id;
+	public long getDbId() {
+		return dbId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setDbId(long id) {
+		this.dbId = id;
 	}
 
 	public String getKeywords() {
@@ -100,7 +100,7 @@ public class SearchBuilder implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeLong(id);
+		dest.writeLong(dbId);
 		dest.writeString(keywords);
 		dest.writeString(jobTitle);
 		dest.writeString(countryCode);

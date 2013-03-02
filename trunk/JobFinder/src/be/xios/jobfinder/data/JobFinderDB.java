@@ -17,12 +17,15 @@ public class JobFinderDB {
 		public static final String COL_DISTANCE = "distance";
 		public static final String COL_INDUSTRY = "industry";
 		public static final String COL_JOBFUNCTION = "jobFunction";
-
 	}
 
 	public static final class JobFavorites implements BaseColumns {
 
-		// TODO: define columns for jobs, what to save?
+		public static final String TABLE_NAME = "favoritejobs";
+		public static final String COL_ID = "_id";
+		public static final String COL_LI_ID = "linkedinID";
+		public static final String COL_POSITION_TITLE = "positionTitle";
+		public static final String COL_COMPANY_NAME = "companyName";
 	}
 
 }

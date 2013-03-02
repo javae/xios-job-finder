@@ -31,15 +31,29 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		sqlCreate = "CREATE TABLE " + JobFinderDB.JobFavorites.TABLE_NAME + "("
+				+ JobFinderDB.JobFavorites.COL_ID
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ JobFinderDB.JobFavorites.COL_POSITION_TITLE + " TEXT,"
+				+ JobFinderDB.JobFavorites.COL_COMPANY_NAME + " TEXT)";
+
+		try {
+			db.execSQL(sqlCreate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(MySQLiteHelper.class.getName(),
+		Log.d(MySQLiteHelper.class.getName(),
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS "
 				+ JobFinderDB.SavedSearches.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS "
+				+ JobFinderDB.JobFavorites.TABLE_NAME);
 		onCreate(db);
 
 	}
