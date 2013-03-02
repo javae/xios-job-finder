@@ -10,37 +10,6 @@ import be.xios.jobfinder.model.LinkedInJobDetail;
 
 public class LinkedInJobDetailParser {
 	
-	/*
-	public LinkedInJobDetail readJobDetailStream(InputStream in) throws IOException {
-		String jobDescription = JsonPath.read(in, "$.description");
-		in.reset();
-		String skills = JsonPath.read(in, "$.skills-and-experience");
-		
-//		String jobDescription = JsonPath.read(jobDetailJSON, "$.description");
-//		String skills = JsonPath.read(jobDetailJSON, "$.skills-and-experience");
-		
-		LinkedInJobDetail jobDetail = new LinkedInJobDetail();
-		jobDetail.setJobDescription(jobDescription);
-		jobDetail.setSkills(skills);
-		
-		return jobDetail;
-	}
-	
-	public LinkedInJobDetail readJobDetailStream(String in) throws IOException {
-		String jobDescription = JsonPath.read(in, "$.description");
-		String skills = JsonPath.read(in, "$.skills-and-experience");
-		
-//		String jobDescription = JsonPath.read(jobDetailJSON, "$.description");
-//		String skills = JsonPath.read(jobDetailJSON, "$.skills-and-experience");
-		
-		LinkedInJobDetail jobDetail = new LinkedInJobDetail();
-		jobDetail.setJobDescription(jobDescription);
-		jobDetail.setSkills(skills);
-		
-		return jobDetail;
-	}
-	*/
-	
 	private LinkedInJobDetail jobDetail;
 	
 	public LinkedInJobDetail readJobDetailStream(InputStream in) throws IOException {
