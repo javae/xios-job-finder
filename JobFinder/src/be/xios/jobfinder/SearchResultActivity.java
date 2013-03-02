@@ -6,18 +6,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.scribe.model.Verb;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ListView;
 import be.xios.jobfinder.connector.LinkedInConnector;
 import be.xios.jobfinder.data.JobListAdapter;
 import be.xios.jobfinder.json.LinkedInJobParser;
@@ -33,25 +33,41 @@ public class SearchResultActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// TODO retrieve SearchBuilder object from SearchBuilderActivity through intents
+		// retrieve SearchBuilder object from SearchBuilderActivity through intents
 		
 		Bundle bundle = getIntent().getExtras();
-		searchData = bundle.getParcelable("searchdata");
+		// SearchBuilder searchBuilder = bundle.getParcelable("searchdata");
 
 		SearchBuilder searchBuilder = new SearchBuilder();
-		searchBuilder.setKeywords("java, management, oracle");
-		
-		JSONObject jobObject = new JSONObject();
-		try {
-			jobObject.put("keywords", searchBuilder.getKeywords());
-		} catch (JSONException jsone) {
-			jsone.printStackTrace();
-		}
-		
+		searchBuilder.setKeywords("java");
+		//				searchBuilder.setJobTitle("programmer");
+		//				searchBuilder.setCountryCode("be");
+		//				searchBuilder.setPostalCode("3000");
+		//				searchBuilder.setDistance(10);
+		//				searchBuilder.setIndustry("Banking");
+		//				searchBuilder.setJobFunction("Information Technology");
+
+		/*
+				JSONObject jobObject = new JSONObject();
+				try {
+					jobObject.put("keywords", searchBuilder.getKeywords());
+					jobObject.put("job-title", searchBuilder.getJobTitle());
+					jobObject.put("country-code", searchBuilder.getCountryCode());
+					jobObject.put("postal-code", searchBuilder.getPostalCode());
+					jobObject.put("distance", 0);//searchBuilder.getDistance());
+					if (searchBuilder.getIndustry() != null && searchBuilder.getIndustry().length() > 0)
+						jobObject.put("facet", "industry," + searchBuilder.getIndustry() );
+					if (searchBuilder.getJobFunction() != null && searchBuilder.getJobFunction().length() > 0)
+						jobObject.put("facet", "job-function," + searchBuilder.getJobFunction());
+				} catch (JSONException jsone) {
+					jsone.printStackTrace();
+				}
+		 */
+
 		jobListAdapter = new JobListAdapter(getApplicationContext(), new ArrayList<LinkedInJob>());
 		LinkedInJobSearch search = new LinkedInJobSearch(jobListAdapter);
-		search.execute(jobObject);
-		
+		search.execute(searchBuilder);
+
 		setListAdapter(jobListAdapter);
 	}
 
@@ -62,7 +78,16 @@ public class SearchResultActivity extends ListActivity {
 		return true;
 	}
 	
-	private class LinkedInJobSearch extends AsyncTask<JSONObject, Void, List<LinkedInJob>> {
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
+		Intent jobDetailIntent = new Intent(getApplicationContext(), JobDetailActivity.class);
+		jobDetailIntent.putExtra(JobDetailActivity.JOB_ID, job.getId());
+		startActivity(jobDetailIntent);
+	}
+	
+	private class LinkedInJobSearch extends AsyncTask<SearchBuilder, Void, List<LinkedInJob>> {
 
 		String url = "http://api.linkedin.com/v1/job-search:(jobs:(id,posting-timestamp,company:(name),position:(title,location)))";
 		JobListAdapter jobListAdapter;
@@ -72,7 +97,7 @@ public class SearchResultActivity extends ListActivity {
 		}
 		
 		@Override
-		protected List<LinkedInJob> doInBackground(JSONObject... params) {
+		protected List<LinkedInJob> doInBackground(SearchBuilder... params) {
 			List<LinkedInJob> jobs = new ArrayList<LinkedInJob>();
 			
 			LinkedInConnector connector = new LinkedInConnector();
@@ -93,20 +118,11 @@ public class SearchResultActivity extends ListActivity {
 			
 			jobListAdapter.addAll(result);
 			jobListAdapter.notifyDataSetChanged();
-			System.out.println("onPostExecute");
-			
-			/*
-			FragmentManager fragmentManager = getFragmentManager();
-	        DialogFragment newFragment = new DialogFragment();
-	        newFragment.getDialog().setTitle("LinkedIn job lookup");
-	        newFragment.getDialog().
-	        newFragment.show(fragmentManager, "progress dialog");
-	        */
 		}
 	}
 	
 	public List<LinkedInJob> createTestData() throws ParseException {
-List<LinkedInJob> testData = new ArrayList<LinkedInJob>();
+		List<LinkedInJob> testData = new ArrayList<LinkedInJob>();
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD", Locale.getDefault());
 		
