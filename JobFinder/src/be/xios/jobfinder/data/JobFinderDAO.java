@@ -3,12 +3,14 @@ package be.xios.jobfinder.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.xios.jobfinder.model.SearchBuilder;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import be.xios.jobfinder.model.LinkedInJob;
+import be.xios.jobfinder.model.SearchBuilder;
 
 public class JobFinderDAO {
 	// Database fields
@@ -23,6 +25,11 @@ public class JobFinderDAO {
 			JobFinderDB.SavedSearches.COL_DISTANCE,
 			JobFinderDB.SavedSearches.COL_INDUSTRY,
 			JobFinderDB.SavedSearches.COL_JOBFUNCTION };
+
+	private String[] allFavColumns = { JobFinderDB.JobFavorites.COL_ID,
+			JobFinderDB.JobFavorites.COL_LI_ID,
+			JobFinderDB.JobFavorites.COL_POSITION_TITLE,
+			JobFinderDB.JobFavorites.COL_COMPANY_NAME };
 
 	public JobFinderDAO(Context context) {
 		dbHelper = new MySQLiteHelper(context);
@@ -64,11 +71,38 @@ public class JobFinderDAO {
 		return newSavedSearch;
 	}
 
-	public void deleteComment(SearchBuilder savedSearch) {
-		long id = savedSearch.getId();
-		System.out.println("Saved search deleted with id: " + id);
+	public LinkedInJob createFavoriteJob(LinkedInJob currentJob) {
+		ContentValues values = new ContentValues();
+		values.put(JobFinderDB.JobFavorites.COL_LI_ID, currentJob.getId());
+		values.put(JobFinderDB.JobFavorites.COL_POSITION_TITLE,
+				currentJob.getPositionTitle());
+		values.put(JobFinderDB.JobFavorites.COL_COMPANY_NAME,
+				currentJob.getCompanyName());
+
+		long insertId = database.insert(JobFinderDB.JobFavorites.TABLE_NAME,
+				null, values);
+
+		Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,
+				allFavColumns, JobFinderDB.JobFavorites.COL_ID + " = "
+						+ insertId, null, null, null, null);
+		cursor.moveToFirst();
+		LinkedInJob newFavJob = cursorToLinkedInJob(cursor);
+		cursor.close();
+		return newFavJob;
+	}
+
+	public void deleteSavedSearch(SearchBuilder savedSearch) {
+		long id = savedSearch.getDbId();
 		database.delete(JobFinderDB.SavedSearches.TABLE_NAME,
 				JobFinderDB.SavedSearches.COL_ID + " = " + id, null);
+		Log.d("JobFinderDAO", "Saved search deleted with id: " + id);
+	}
+
+	public void deleteFavJob(LinkedInJob favJob) {
+		long id = favJob.getDbId();
+		database.delete(JobFinderDB.SavedSearches.TABLE_NAME,
+				JobFinderDB.SavedSearches.COL_ID + " = " + id, null);
+		Log.d("JobFinderDAO", "Favorite job deleted with id: " + id);
 	}
 
 	public List<SearchBuilder> getAllSavedSearches() {
@@ -88,9 +122,27 @@ public class JobFinderDAO {
 		return savedSearches;
 	}
 
+	public List<LinkedInJob> getAllFavJobs() {
+		List<LinkedInJob> favJobs = new ArrayList<LinkedInJob>();
+
+		Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,
+				allFavColumns, null, null, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			LinkedInJob favJob = cursorToLinkedInJob(cursor);
+			favJobs.add(favJob);
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		return favJobs;
+	}
+
 	private SearchBuilder cursorToSearchBuilder(Cursor cursor) {
 		SearchBuilder savedsearch = new SearchBuilder();
-		savedsearch.setId(cursor.getLong(0));
+
+		// savedsearch.setId(cursor.getLong(0));
 		savedsearch.setKeywords(cursor.getString(1));
 		savedsearch.setJobTitle(cursor.getString(2));
 		savedsearch.setCountryCode(cursor.getString(3));
@@ -100,5 +152,16 @@ public class JobFinderDAO {
 		savedsearch.setJobFunction(cursor.getString(7));
 
 		return savedsearch;
+	}
+
+	private LinkedInJob cursorToLinkedInJob(Cursor cursor) {
+		LinkedInJob favJob = new LinkedInJob();
+
+		// favJob.setDbId(cursor.getLong(0));
+		favJob.setId(cursor.getInt(1)); // = linkedinjobID
+		favJob.setPositionTitle(cursor.getString(2));
+		favJob.setCompanyName(cursor.getString(3));
+
+		return favJob;
 	}
 }

@@ -7,7 +7,8 @@ import android.os.Parcelable;
 
 public class LinkedInJob implements Parcelable {
 
-	private int id;
+	private long dbId;
+	private int id; // de linkedinjob ID
 	private String positionTitle;
 	private String companyName;
 	private String location;
@@ -17,6 +18,7 @@ public class LinkedInJob implements Parcelable {
 	}
 
 	public LinkedInJob(Parcel in) {
+		dbId = in.readLong();
 		id = in.readInt();
 		positionTitle = in.readString();
 		companyName = in.readString();
@@ -31,6 +33,14 @@ public class LinkedInJob implements Parcelable {
 		setCompanyName(companyName);
 		setLocation(location);
 		setPostingDate(postingDate);
+	}
+
+	public long getDbId() {
+		return dbId;
+	}
+
+	public void setDbId(long dbId) {
+		this.dbId = dbId;
 	}
 
 	public int getId() {
@@ -81,13 +91,14 @@ public class LinkedInJob implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(dbId);
 		dest.writeInt(id);
 		dest.writeString(positionTitle);
 		dest.writeString(companyName);
 		dest.writeString(location);
 		dest.writeLong(postingDate.getTime());
 	}
-	
+
 	public static final Parcelable.Creator<LinkedInJob> CREATOR = new Parcelable.Creator<LinkedInJob>() {
 
 		@Override
@@ -99,6 +110,6 @@ public class LinkedInJob implements Parcelable {
 		public LinkedInJob[] newArray(int size) {
 			return new LinkedInJob[size];
 		}
-		
+
 	};
 }
