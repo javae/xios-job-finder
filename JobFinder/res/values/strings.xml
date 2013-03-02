@@ -41,12 +41,13 @@
     <string name="jobtitle">Functietitel</string>
     <string name="country">Land</string>
     <string name="postalcode">Postcode</string>
-    <string name="radius">In een straal van</string>
+    <string name="radius">In een straal van </string>
     <string name="industry">Bedrijfstak</string>
     <string name="functions">Functies</string>
     <string name="search">Zoek</string>
     <string name="title_activity_job_search">JobSearchActivity</string>
     <string name="title_activity_job_detail">Vacature Detail</string>
+    <string name="get_location">Bepaal huidige locatie</string>
 
     <!-- Jobdetails -->
     <string name="jd_jobdesc">Vacatureomschrijving</string>

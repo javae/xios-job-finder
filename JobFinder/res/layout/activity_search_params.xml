@@ -50,30 +50,46 @@
 
             <EditText
                 android:id="@+id/etPostalCode"
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="95"
                 android:hint="@string/postalcode" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnGetLocation"
-                style="?android:attr/buttonStyleSmall"
+                android:contentDescription="@string/get_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:src="@drawable/ic_find_location" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvRadius"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/radius"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="95"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tvRadius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radius"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/tvDistValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/sbDistance"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:max="20" />
 
         <TextView
             android:id="@+id/tvIndustry"
