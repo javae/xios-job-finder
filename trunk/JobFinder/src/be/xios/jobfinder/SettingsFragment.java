@@ -18,6 +18,7 @@ import android.preference.SwitchPreference;
 import android.util.Log;
 import be.xios.jobfinder.preference.TimePreference;
 import be.xios.jobfinder.service.JobSearchService;
+import be.xios.jobfinder.util.StringUtil;
 
 public class SettingsFragment extends PreferenceFragment {
 
@@ -40,23 +41,12 @@ public class SettingsFragment extends PreferenceFragment {
 		switchAlarm.setOnPreferenceChangeListener(new JobSearchHandler());
 		
 		savedSearchPreference = (ListPreference) findPreference(resources.getString(R.string.key_saved_search));
-		if (savedSearchPreference != null) {
+		if (savedSearchPreference != null)
 			savedSearchPreference.setSummary(savedSearchPreference.getValue());
-			savedSearchPreference.setOnPreferenceChangeListener(
-					new OnPreferenceChangeListener() {
-						@Override
-						public boolean onPreferenceChange(Preference preference, Object newValue) {
-							ListPreference configIdPreference = (ListPreference) preference;
-							configIdPreference.setSummary((String) newValue);
-							return true;
-						}
-					});
-		}
 		savedSearchPreference.setOnPreferenceChangeListener(new JobSearchHandler());
 		
 		timeTaskPreference = (TimePreference) findPreference(resources.getString(R.string.key_time_task));
-//		timeTaskPreference.setOnPreferenceChangeListener(new JobSearchHandler());
-
+		timeTaskPreference.setOnPreferenceChangeListener(new JobSearchHandler());
 	}
 	
 	public class JobSearchHandler implements OnPreferenceChangeListener {
@@ -67,12 +57,17 @@ public class SettingsFragment extends PreferenceFragment {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Activity.ALARM_SERVICE);
 			
+			if (preference.getKey().equals(resources.getString(R.string.key_saved_search))) {
+				ListPreference configIdPreference = (ListPreference) preference;
+				configIdPreference.setSummary((String) newValue);
+			}
+			
 			if (preference.getKey().equals(resources.getString(R.string.key_display_alarm))) {
 				Boolean autoSearch = (Boolean) newValue;
 				
 				if (!autoSearch && pendingIntent != null) {
 					alarmManager.cancel(pendingIntent);
-				} else if (autoSearch){
+				} else if (autoSearch && StringUtil.isNotBlank(savedSearchPreference.getValue())){
 					try {
 						setAlarm(alarmManager);
 					} catch (ParseException pe) {
@@ -99,13 +94,13 @@ public class SettingsFragment extends PreferenceFragment {
 			
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(System.currentTimeMillis());
-	        calendar.add(Calendar.SECOND, 5);
 			
 			Calendar selectedTime = Calendar.getInstance();
 			selectedTime.setTimeInMillis(timeTaskPreference.getTime().getTime());
 	        
 			calendar.set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY));
 			calendar.set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE));
+			calendar.add(Calendar.SECOND, 0);
 			calendar.getTime();
 	        
 	        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), day, pendingIntent);
