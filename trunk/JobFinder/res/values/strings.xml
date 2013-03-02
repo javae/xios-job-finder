@@ -10,16 +10,16 @@
     <!-- Main -->
     <string name="new_search">Nieuwe zoekopdracht</string>
     <string name="saved_searches">Bewaarde zoekopdrachten</string>
-    <string name="favorites">Favorieten</string>
+    <string name="favorites">Favoriete jobs</string>
     <string name="settings">Instellingen</string>
 
     <!-- Saved searches -->
     <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
-    <string name="no_saved_searches">Geen bewaarde zoekopdrachten</string>
+    <string name="no_saved_searches">Geen bewaarde zoekopdrachten gevonden.</string>
 
     <!-- Favorites -->
-    <string name="title_activity_favorites">Favorieten</string>
-    <string name="no_favorites">Geen favorieten</string>
+    <string name="title_activity_favorites">Favoriete jobs</string>
+    <string name="no_favorites">Geen favoriete jobs gevonden.</string>
 
     <!-- Settings -->
     <string name="title_activity_settings">Instellingen</string>

@@ -24,18 +24,19 @@ import be.xios.jobfinder.json.LinkedInJobParser;
 import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
 
-public class JobSearchActivity extends ListActivity {
+public class SearchResultActivity extends ListActivity {
 
 	private JobListAdapter jobListAdapter;
+	private SearchBuilder searchData;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// retrieve SearchBuilder object from SearchBuilderActivity through intents
+		// TODO retrieve SearchBuilder object from SearchBuilderActivity through intents
 		
-		// Bundle bundle = getIntent().getExtras();
-		// SearchBuilder searchBuilder = bundle.getParcelable("searchdata");
+		Bundle bundle = getIntent().getExtras();
+		searchData = bundle.getParcelable("searchdata");
 
 		SearchBuilder searchBuilder = new SearchBuilder();
 		searchBuilder.setKeywords("java, management, oracle");
