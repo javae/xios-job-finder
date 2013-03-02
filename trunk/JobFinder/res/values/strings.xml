@@ -52,6 +52,385 @@
     <string name="title_activity_job_detail">Vacature Detail</string>
     <string name="get_location">Bepaal huidige locatie</string>
 
+    <string-array name="job_functions">
+        <item>No selection</item>
+        <item>Accounting / Auditing</item>
+        <item>Administrative</item>
+        <item>Advertising</item>
+        <item>Analyst</item>
+        <item>Art / Creative</item>
+        <item>Business Development</item>
+        <item>Consulting</item>
+        <item>Customer Service</item>
+        <item>Distribution</item>
+        <item>Design</item>
+        <item>Education</item>
+        <item>Engineering</item>
+        <item>Finance</item>
+        <item>General Business</item>
+        <item>Health Care Provider</item>
+        <item>Human Resources</item>
+        <item>Information Technology</item>
+        <item>Legal</item>
+        <item>Management</item>
+        <item>Manufacturing</item>
+        <item>Marketing</item>
+        <item>Other</item>
+        <item>Public Relations</item>
+        <item>Purchasing</item>
+        <item>Product Management</item>
+        <item>Project Management</item>
+        <item>Production</item>
+        <item>Quality Assurance</item>
+        <item>Research</item>
+        <item>Sales</item>
+        <item>Science</item>
+        <item>Strategy / Planning</item>
+        <item>Supply Chain</item>
+        <item>Training</item>
+        <item>Writing / Editing</item>
+    </string-array>
+    
+    <string-array name="job_function_codes">
+        <item></item>
+        <item>acct</item>
+        <item>adm</item>
+        <item>advr</item>
+        <item>anls</item>
+        <item>art</item>
+        <item>bd</item>
+        <item>cnsl</item>
+        <item>cust</item>
+        <item>dist</item>
+        <item>dsgn</item>
+        <item>edu</item>
+        <item>eng</item>
+        <item>fin</item>
+        <item>genb</item>
+        <item>hcpr</item>
+        <item>hr</item>
+        <item>it</item>
+        <item>lgl</item>
+        <item>mgmt</item>
+        <item>mnfc</item>
+        <item>mrkt</item>
+        <item>othr</item>
+        <item>pr</item>
+        <item>prch</item>
+        <item>prdm</item>
+        <item>prjm</item>
+        <item>prod</item>
+        <item>qa</item>
+        <item>rsch</item>
+        <item>sale</item>
+        <item>sci</item>
+        <item>stra</item>
+        <item>supl</item>
+        <item>trng</item>
+        <item>wrt</item>
+    </string-array>
+    
+    <string-array name="industries">
+        <item>No selection</item>
+        <item>Accounting</item>
+        <item>Airlines/Aviation</item>
+        <item>Alternative Dispute Resolution</item>
+        <item>Alternative Medicine</item>
+        <item>Animation</item>
+        <item>Apparel and Fashion</item>
+        <item>Architecture and Planning</item>
+        <item>Arts and Crafts</item>
+        <item>Automotive</item>
+        <item>Aviation and Aerospace</item>
+        <item>Banking</item>
+        <item>Biotechnology</item>
+        <item>Broadcast Media</item>
+        <item>Building Materials</item>
+        <item>Business Supplies and Equipment</item>
+        <item>Capital Markets</item>
+        <item>Chemicals</item>
+        <item>Civic and Social Organization</item>
+        <item>Civil Engineering</item>
+        <item>Commercial Real Estate</item>
+        <item>Computer and Network Security</item>
+        <item>Computer Games</item>
+        <item>Computer Hardware</item>
+        <item>Computer Networking</item>
+        <item>Computer Software</item>
+        <item>Construction</item>
+        <item>Consumer Electronics</item>
+        <item>Consumer Goods</item>
+        <item>Consumer Services</item>
+        <item>Cosmetics</item>
+        <item>Dairy</item>
+        <item>Defense and Space</item>
+        <item>Design</item>
+        <item>Education Management</item>
+        <item>E-Learning</item>
+        <item>Electrical/Electronic Manufacturing</item>
+        <item>Entertainment</item>
+        <item>Environmental Services</item>
+        <item>Events Services</item>
+        <item>Executive Office</item>
+        <item>Facilities Services</item>
+        <item>Farming</item>
+        <item>Financial Services</item>
+        <item>Fine Art</item>
+        <item>Fishery</item>
+        <item>Food and Beverages</item>
+        <item>Food Production</item>
+        <item>Fund-Raising</item>
+        <item>Furniture</item>
+        <item>Gambling and Casinos</item>
+        <item>Glass, Ceramics and Concrete</item>
+        <item>Government Administration</item>
+        <item>Government Relations</item>
+        <item>Graphic Design</item>
+        <item>Health, Wellness and Fitness</item>
+        <item>Higher Education</item>
+        <item>Hospital and Health Care</item>
+        <item>Hospitality</item>
+        <item>Human Resources</item>
+        <item>Import and Export</item>
+        <item>Individual and Family Services</item>
+        <item>Industrial Automation</item>
+        <item>Information Services</item>
+        <item>Information Technology and Services</item>
+        <item>Insurance</item>
+        <item>International Affairs</item>
+        <item>International Trade and Development</item>
+        <item>Internet</item>
+        <item>Investment Banking</item>
+        <item>Investment Management</item>
+        <item>Judiciary</item>
+        <item>Law Enforcement</item>
+        <item>Law Practice</item>
+        <item>Legal Services</item>
+        <item>Legislative Office</item>
+        <item>Leisure, Travel and Tourism</item>
+        <item>Libraries</item>
+        <item>Logistics and Supply Chain</item>
+        <item>Luxury Goods and Jewelry</item>
+        <item>Machinery</item>
+        <item>Management Consulting</item>
+        <item>Maritime</item>
+        <item>Market Research</item>
+        <item>Marketing and Advertising</item>
+        <item>Mechanical or Industrial Engineering</item>
+        <item>Media Production</item>
+        <item>Medical Devices</item>
+        <item>Medical Practice</item>
+        <item>Mental Health Care</item>
+        <item>Military</item>
+        <item>Mining and Metals</item>
+        <item>Motion Pictures and Film</item>
+        <item>Museums and Institutions</item>
+        <item>Music</item>
+        <item>Nanotechnology</item>
+        <item>Newspapers</item>
+        <item>Non-Profit Organization Management</item>
+        <item>Oil and Energy</item>
+        <item>Online Media</item>
+        <item>Outsourcing/Offshoring</item>
+        <item>Package/Freight Delivery</item>
+        <item>Packaging and Containers</item>
+        <item>Paper and Forest Products</item>
+        <item>Performing Arts</item>
+        <item>Pharmaceuticals</item>
+        <item>Philanthropy</item>
+        <item>Photography</item>
+        <item>Plastics</item>
+        <item>Political Organization</item>
+        <item>Primary/Secondary Education</item>
+        <item>Printing</item>
+        <item>Professional Training and Coaching</item>
+        <item>Program Development</item>
+        <item>Public Policy</item>
+        <item>Public Relations and Communications</item>
+        <item>Public Safety</item>
+        <item>Publishing</item>
+        <item>Railroad Manufacture</item>
+        <item>Ranching</item>
+        <item>Real Estate</item>
+        <item>Recreational Facilities and Services</item>
+        <item>Religious Institutions</item>
+        <item>Renewables and Environment</item>
+        <item>Research</item>
+        <item>Restaurants</item>
+        <item>Retail</item>
+        <item>Security and Investigations</item>
+        <item>Semiconductors</item>
+        <item>Shipbuilding</item>
+        <item>Sporting Goods</item>
+        <item>Sports</item>
+        <item>Staffing and Recruiting</item>
+        <item>Supermarkets</item>
+        <item>Telecommunications</item>
+        <item>Textiles</item>
+        <item>Think Tanks</item>
+        <item>Tobacco</item>
+        <item>Translation and Localization</item>
+        <item>Transportation/Trucking/Railroad</item>
+        <item>Utilities</item>
+        <item>Venture Capital and Private Equity</item>
+        <item>Veterinary</item>
+        <item>Warehousing</item>
+        <item>Wholesale</item>
+        <item>Wine and Spirits</item>
+        <item>Wireless</item>
+        <item>Writing and Editing</item>
+    </string-array>
+    
+    <string-array name="industry_codes">
+        <item></item>
+        <item>94</item>
+        <item>120</item>
+        <item>125</item>
+        <item>127</item>
+        <item>19</item>
+        <item>50</item>
+        <item>111</item>
+        <item>53</item>
+        <item>52</item>
+        <item>41</item>
+        <item>12</item>
+        <item>36</item>
+        <item>49</item>
+        <item>138</item>
+        <item>129</item>
+        <item>54</item>
+        <item>90</item>
+        <item>51</item>
+        <item>128</item>
+        <item>118</item>
+        <item>109</item>
+        <item>3</item>
+        <item>5</item>
+        <item>4</item>
+        <item>48</item>
+        <item>24</item>
+        <item>25</item>
+        <item>91</item>
+        <item>18</item>
+        <item>65</item>
+        <item>1</item>
+        <item>99</item>
+        <item>69</item>
+        <item>132</item>
+        <item>112</item>
+        <item>28</item>
+        <item>86</item>
+        <item>110</item>
+        <item>76</item>
+        <item>122</item>
+        <item>63</item>
+        <item>43</item>
+        <item>38</item>
+        <item>66</item>
+        <item>34</item>
+        <item>23</item>
+        <item>101</item>
+        <item>26</item>
+        <item>29</item>
+        <item>145</item>
+        <item>75</item>
+        <item>148</item>
+        <item>140</item>
+        <item>124</item>
+        <item>68</item>
+        <item>14</item>
+        <item>31</item>
+        <item>137</item>
+        <item>134</item>
+        <item>88</item>
+        <item>147</item>
+        <item>84</item>
+        <item>96</item>
+        <item>42</item>
+        <item>74</item>
+        <item>141</item>
+        <item>6</item>
+        <item>45</item>
+        <item>46</item>
+        <item>73</item>
+        <item>77</item>
+        <item>9</item>
+        <item>10</item>
+        <item>72</item>
+        <item>30</item>
+        <item>85</item>
+        <item>116</item>
+        <item>143</item>
+        <item>55</item>
+        <item>11</item>
+        <item>95</item>
+        <item>97</item>
+        <item>80</item>
+        <item>135</item>
+        <item>126</item>
+        <item>17</item>
+        <item>13</item>
+        <item>139</item>
+        <item>71</item>
+        <item>56</item>
+        <item>35</item>
+        <item>37</item>
+        <item>115</item>
+        <item>114</item>
+        <item>81</item>
+        <item>100</item>
+        <item>57</item>
+        <item>113</item>
+        <item>123</item>
+        <item>87</item>
+        <item>146</item>
+        <item>61</item>
+        <item>39</item>
+        <item>15</item>
+        <item>131</item>
+        <item>136</item>
+        <item>117</item>
+        <item>107</item>
+        <item>67</item>
+        <item>83</item>
+        <item>105</item>
+        <item>102</item>
+        <item>79</item>
+        <item>98</item>
+        <item>78</item>
+        <item>82</item>
+        <item>62</item>
+        <item>64</item>
+        <item>44</item>
+        <item>40</item>
+        <item>89</item>
+        <item>144</item>
+        <item>70</item>
+        <item>32</item>
+        <item>27</item>
+        <item>121</item>
+        <item>7</item>
+        <item>58</item>
+        <item>20</item>
+        <item>33</item>
+        <item>104</item>
+        <item>22</item>
+        <item>8</item>
+        <item>60</item>
+        <item>130</item>
+        <item>21</item>
+        <item>108</item>
+        <item>92</item>
+        <item>59</item>
+        <item>106</item>
+        <item>16</item>
+        <item>93</item>
+        <item>133</item>
+        <item>142</item>
+        <item>119</item>
+        <item>103</item>
+</string-array>
+
     <!-- Jobdetails -->
     <string name="jd_jobdesc">Vacatureomschrijving</string>
     <string name="jd_wantedskills">Gewenste vaardigheden &amp; ervaring</string>

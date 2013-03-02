@@ -101,7 +101,8 @@
         <Spinner
             android:id="@+id/spIndustry"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:entries="@array/industries" />
 
         <TextView
             android:id="@+id/tvFunctions"
@@ -113,7 +114,8 @@
         <Spinner
             android:id="@+id/spFunctions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:entries="@array/job_functions" />
 
         <Button
             android:id="@+id/btnSearch"
