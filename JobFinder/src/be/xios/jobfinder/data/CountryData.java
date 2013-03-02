@@ -16,6 +16,7 @@ public class CountryData {
 
 	private static void fillList(List<Country> data) {
 		if (data != null) {
+			data.add(new Country("", "No selection", "No selection", "", ""));
 			data.add(new Country("AF", "AFGHANISTAN", "Afghanistan", "AFG", "004"));
 			data.add(new Country("AL", "ALBANIA", "Albania", "ALB", "008"));
 			data.add(new Country("DZ", "ALGERIA", "Algeria", "DZA", "012"));
