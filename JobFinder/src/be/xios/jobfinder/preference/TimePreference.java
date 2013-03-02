@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import be.xios.jobfinder.R;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.DialogPreference;
@@ -68,6 +67,12 @@ public class TimePreference extends DialogPreference {
 			editor.putInt(getKey() + ".hour", hour);
 			editor.putInt(getKey() + ".minute", minute);
 			editor.commit();
+			
+			try {
+				callChangeListener(getFormattedTime(hour, minute));
+			} catch (ParseException pe) {
+				pe.printStackTrace();
+			}
 		}
 	}
 	
@@ -84,4 +89,5 @@ public class TimePreference extends DialogPreference {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		return format.parse(hour + ":" + minute);
 	}
+	
 }
