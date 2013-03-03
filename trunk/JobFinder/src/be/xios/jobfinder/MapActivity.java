@@ -31,6 +31,7 @@ public class MapActivity extends Activity implements LocationListener {
 	private LocationManager locationManager;
 	private String provider;
 	private GoogleMap map;
+	public static final String JOB_LIST = "joblisting";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MapActivity extends Activity implements LocationListener {
 		// .getMap();
 
 		Bundle b = getIntent().getExtras();
-		List<LinkedInJob> jobListing = b.getParcelableArrayList("data");
+		List<LinkedInJob> jobListing = b.getParcelableArrayList("JOB_LIST");
 
 		addMarkersToMap(jobListing);
 

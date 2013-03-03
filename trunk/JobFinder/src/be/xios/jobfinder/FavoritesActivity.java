@@ -1,23 +1,25 @@
 package be.xios.jobfinder;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import be.xios.jobfinder.data.JobFinderDAO;
-import be.xios.jobfinder.model.LinkedInJob;
-import android.os.Bundle;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.support.v4.app.NavUtils;
+import be.xios.jobfinder.data.JobFinderDAO;
+import be.xios.jobfinder.data.JobListAdapter;
+import be.xios.jobfinder.model.LinkedInJob;
 
 public class FavoritesActivity extends ListActivity {
 
 	private JobFinderDAO datasource;
+	private JobListAdapter jobListAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,12 @@ public class FavoritesActivity extends ListActivity {
 		datasource.open();
 
 		List<LinkedInJob> values = datasource.getAllFavJobs();
+
+		jobListAdapter = new JobListAdapter(getApplicationContext(),
+				new ArrayList<LinkedInJob>());
+		jobListAdapter.addAll(values);
+		setListAdapter(jobListAdapter);
+
 		ArrayAdapter<LinkedInJob> adapter = new ArrayAdapter<LinkedInJob>(this,
 				android.R.layout.simple_list_item_1, values);
 		setListAdapter(adapter);

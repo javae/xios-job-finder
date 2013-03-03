@@ -15,6 +15,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ public class SearchResultActivity extends ListActivity {
 	private JobListAdapter jobListAdapter;
 	private SearchBuilder searchData;
 	private JobFinderDAO datasource;
+	private List<LinkedInJob> jobs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,16 @@ public class SearchResultActivity extends ListActivity {
 			}
 
 			break;
+		case R.id.menu_mapview:
+			Bundle b = new Bundle();
+			Intent mapInt = new Intent(getApplicationContext(),
+					MapActivity.class);
 
+			b.putParcelableArrayList(MapActivity.JOB_LIST,
+					(ArrayList<? extends Parcelable>) jobs);
+			mapInt.putExtras(b);
+			startActivity(mapInt);
+			break;
 		default:
 			break;
 		}
@@ -107,7 +118,7 @@ public class SearchResultActivity extends ListActivity {
 
 		@Override
 		protected List<LinkedInJob> doInBackground(SearchBuilder... params) {
-			List<LinkedInJob> jobs = new ArrayList<LinkedInJob>();
+			jobs = new ArrayList<LinkedInJob>();
 
 			LinkedInConnector connector = new LinkedInConnector();
 			InputStream in = connector.sendRequest(Verb.GET, url, params[0]);

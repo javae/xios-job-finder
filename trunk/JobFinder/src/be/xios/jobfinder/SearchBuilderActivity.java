@@ -45,7 +45,7 @@ public class SearchBuilderActivity extends Activity {
 
 		Button btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new ButtonHandler());
-		btnSearch.setOnLongClickListener(new LongClickHandler());
+		//btnSearch.setOnLongClickListener(new LongClickHandler());
 		ImageButton btnGetPC = (ImageButton) findViewById(R.id.btnGetLocation);
 		btnGetPC.setOnClickListener(new ButtonHandler());
 
@@ -246,27 +246,5 @@ public class SearchBuilderActivity extends Activity {
 
 	}
 
-	private class LongClickHandler implements OnLongClickListener {
-
-		@Override
-		public boolean onLongClick(View v) {
-			List<LinkedInJob> jobListings = null;
-			Bundle b = new Bundle();
-			Intent mapInt = new Intent(getApplicationContext(),
-					MapActivity.class);
-			try {
-				jobListings = createTestData();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			b.putParcelableArrayList("data",
-					(ArrayList<? extends Parcelable>) jobListings);
-			mapInt.putExtras(b);
-			startActivity(mapInt);
-			return false;
-		}
-
-	}
 	
 }
