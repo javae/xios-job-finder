@@ -444,5 +444,6 @@
     <string name="jd_jobdesc">Vacatureomschrijving</string>
     <string name="jd_wantedskills">Gewenste vaardigheden &amp; ervaring</string>
     <string name="jd_companydesc">Beschrijving van het bedrijf</string>
+    <string name="menu_toggle_map">Mapweergave</string>
 
 </resources>
