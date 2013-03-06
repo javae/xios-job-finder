@@ -68,6 +68,8 @@ public class TimePreference extends DialogPreference {
 			editor.putInt(getKey() + ".minute", minute);
 			editor.commit();
 			
+			// This is called so when an OnPreferenceChangeListener is attached,
+			// it will be executed.
 			try {
 				callChangeListener(getFormattedTime(hour, minute));
 			} catch (ParseException pe) {
