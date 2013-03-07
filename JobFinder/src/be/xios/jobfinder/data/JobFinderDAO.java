@@ -29,7 +29,8 @@ public class JobFinderDAO {
 			JobFinderDB.SavedSearches.COL_INDUSTRY,
 			JobFinderDB.SavedSearches.COL_JOBFUNCTION };
 
-	private String[] allFavColumns = { JobFinderDB.JobFavorites.COL_ID,
+	private String[] allFavColumns = { 
+			JobFinderDB.JobFavorites.COL_ID,
 			JobFinderDB.JobFavorites.COL_LI_ID,
 			JobFinderDB.JobFavorites.COL_POSITION_TITLE,
 			JobFinderDB.JobFavorites.COL_COMPANY_NAME,
@@ -79,20 +80,25 @@ public class JobFinderDAO {
 	}
 
 	public long createFavoriteJob(LinkedInJob currentJob) {
-		ContentValues values = new ContentValues();
-		values.put(JobFinderDB.JobFavorites.COL_LI_ID, currentJob.getId());
-		values.put(JobFinderDB.JobFavorites.COL_POSITION_TITLE,
-				currentJob.getPositionTitle());
-		values.put(JobFinderDB.JobFavorites.COL_COMPANY_NAME,
-				currentJob.getCompanyName());
-		values.put(JobFinderDB.JobFavorites.COL_LOCATION,
-				currentJob.getLocation());
-		values.put(JobFinderDB.JobFavorites.COL_POSTING_DATE, currentJob
-				.getPostingDate().toString());
-
-		long insertId = database.insert(JobFinderDB.JobFavorites.TABLE_NAME,
-				null, values);
-
+		long insertId = -1;
+		//kijk of deze id al bij favorieten staat!		
+		Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME, allFavColumns, 
+                JobFinderDB.JobFavorites.COL_LI_ID + " = " + currentJob.getId(), null, null, null, null);
+		if (cursor.getCount() > 0) {
+			ContentValues values = new ContentValues();
+			values.put(JobFinderDB.JobFavorites.COL_LI_ID, currentJob.getId());
+			values.put(JobFinderDB.JobFavorites.COL_POSITION_TITLE,
+					currentJob.getPositionTitle());
+			values.put(JobFinderDB.JobFavorites.COL_COMPANY_NAME,
+					currentJob.getCompanyName());
+			values.put(JobFinderDB.JobFavorites.COL_LOCATION,
+					currentJob.getLocation());
+			values.put(JobFinderDB.JobFavorites.COL_POSTING_DATE, currentJob
+					.getPostingDate().toString());
+			
+			insertId = database.insert(JobFinderDB.JobFavorites.TABLE_NAME,
+					null, values);
+		}
 		return insertId;
 
 		// Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,

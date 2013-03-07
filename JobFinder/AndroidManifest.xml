@@ -80,7 +80,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBsXTZT3C69TQHHTygw4dEl4qlXCdKk1xA" />
+            android:value="AIzaSyChpCpmJcvV4-jitkyk8P2bnQHqFRcc-0Q" />
         
         <service 
             android:name="be.xios.jobfinder.service.JobSearchService" />
