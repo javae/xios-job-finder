@@ -29,8 +29,8 @@ import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
 
 public class SearchResultActivity extends ListActivity {
-	
-	public static final String SEARCH_PARAMS = "search_parameters";  
+
+	public static final String SEARCH_PARAMS = "search_parameters";
 	private JobListAdapter jobListAdapter;
 	private SearchBuilder searchData;
 	private JobFinderDAO datasource;
@@ -43,6 +43,8 @@ public class SearchResultActivity extends ListActivity {
 		Bundle bundle = getIntent().getExtras();
 		searchData = bundle.getParcelable(SEARCH_PARAMS);
 
+		// TODO: searchdata wordt hier goed binnengehaald, ook vanuit de saved
+		// searches maar blijkbaar loopt er iets mis hieronder?
 		jobListAdapter = new JobListAdapter(getApplicationContext(),
 				new ArrayList<LinkedInJob>());
 		LinkedInJobSearch search = new LinkedInJobSearch(jobListAdapter);
@@ -82,7 +84,7 @@ public class SearchResultActivity extends ListActivity {
 					MapActivity.class);
 
 			b.putParcelableArrayList(MapActivity.JOB_LIST,
-					(ArrayList<? extends Parcelable>) jobs);
+					(ArrayList<? extends Parcelable>) (jobs));
 			mapInt.putExtras(b);
 			startActivity(mapInt);
 			break;

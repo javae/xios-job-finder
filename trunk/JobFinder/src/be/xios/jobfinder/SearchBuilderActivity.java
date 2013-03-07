@@ -1,9 +1,6 @@
 package be.xios.jobfinder;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,11 +13,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import be.xios.jobfinder.data.Country;
 import be.xios.jobfinder.data.CountryData;
-import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
 
 public class SearchBuilderActivity extends Activity {
@@ -45,7 +39,6 @@ public class SearchBuilderActivity extends Activity {
 
 		Button btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new ButtonHandler());
-		//btnSearch.setOnLongClickListener(new LongClickHandler());
 		ImageButton btnGetPC = (ImageButton) findViewById(R.id.btnGetLocation);
 		btnGetPC.setOnClickListener(new ButtonHandler());
 
@@ -60,7 +53,7 @@ public class SearchBuilderActivity extends Activity {
 		return true;
 	}
 
-	private String getPostalCodeFromCurrentLocation() {
+	private void setLocationFields() {
 		String postalCode = null;
 		String countryCode = null;
 
@@ -83,15 +76,27 @@ public class SearchBuilderActivity extends Activity {
 					location.getLatitude(), location.getLongitude(), 1);
 
 			if (addresses.size() > 0) {
-				postalCode = addresses.get(0).getPostalCode();
-				// TODO set spinner to found country
-				countryCode = addresses.get(0).getCountryCode();
+				EditText et = (EditText) findViewById(R.id.etPostalCode);
+				et.setText(addresses.get(0).getPostalCode());
+				
+				//messy.. but it works
+				countryCode = addresses.get(0).getCountryName();
+				Spinner sp = (Spinner) findViewById(R.id.spCountry);
+				List<Country> list = CountryData.getCountryList();
+				Country[] array = list.toArray(new Country[list.size()]);
+				for (int i = 0; i < array.length; i++) {
+					if (countryCode.equalsIgnoreCase(array[i].toString())) {
+						sp.setSelection(i);
+						break;
+					}
+				}
 			}
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "Locatie kon niet worden bepaald.", Toast.LENGTH_SHORT).show();
-			//e.printStackTrace();
+			Toast.makeText(getApplicationContext(),
+					"Locatie kon niet worden bepaald.", Toast.LENGTH_SHORT)
+					.show();
+			// e.printStackTrace();
 		}
-		return postalCode;
 
 	}
 
@@ -122,8 +127,7 @@ public class SearchBuilderActivity extends Activity {
 				startActivity(searchInt);
 				break;
 			case R.id.btnGetLocation:
-				EditText etPostalCode = (EditText) findViewById(R.id.etPostalCode);
-				etPostalCode.setText(getPostalCodeFromCurrentLocation());
+				setLocationFields();
 				break;
 			default:
 				break;
@@ -140,16 +144,19 @@ public class SearchBuilderActivity extends Activity {
 		et = (EditText) findViewById(R.id.etJobTitle);
 		String jobtitle = et.getText().toString();
 		Spinner sp = (Spinner) findViewById(R.id.spCountry);
-		String country = CountryData.getCountryList().get(sp.getSelectedItemPosition()).getIso2();
-		
+		String country = CountryData.getCountryList()
+				.get(sp.getSelectedItemPosition()).getIso2();
+
 		SeekBar sbDist = (SeekBar) findViewById(R.id.sbDistance);
 		// distance from kilometer to miles
 		// * 5 so it is the same as in the label
 		int dist = (int) ((sbDist.getProgress() * 5) * 0.621371);
 		sp = (Spinner) findViewById(R.id.spFunctions);
-		String function = getResources().getStringArray(R.array.job_function_codes)[sp.getSelectedItemPosition()];
+		String function = getResources().getStringArray(
+				R.array.job_function_codes)[sp.getSelectedItemPosition()];
 		sp = (Spinner) findViewById(R.id.spIndustry);
-		String industry = getResources().getStringArray(R.array.industry_codes)[sp.getSelectedItemPosition()];
+		String industry = getResources().getStringArray(R.array.industry_codes)[sp
+				.getSelectedItemPosition()];
 
 		sb.setKeywords(keywords);
 		sb.setJobTitle(jobtitle);
@@ -159,61 +166,6 @@ public class SearchBuilderActivity extends Activity {
 		sb.setIndustry(industry);
 
 		return sb;
-	}
-
-	private List<LinkedInJob> createTestData() throws ParseException {
-		List<LinkedInJob> testData = new ArrayList<LinkedInJob>();
-
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD",
-				Locale.getDefault());
-
-		int id = 1;
-		String positionTitle = "position1";
-		String companyName = "company1";
-		String location = "Brussel";
-		Date postingDate = format.parse("2013-02-13");
-		LinkedInJob job1 = new LinkedInJob(id, positionTitle, companyName,
-				location, postingDate);
-
-		id = 2;
-		positionTitle = "position2";
-		companyName = "company2";
-		location = "Leuven";
-		postingDate = format.parse("2013-02-14");
-		LinkedInJob job2 = new LinkedInJob(id, positionTitle, companyName,
-				location, postingDate);
-
-		id = 3;
-		positionTitle = "position3";
-		companyName = "company3";
-		location = "Diestesteenweg 304, Kessel-Lo";
-		postingDate = format.parse("2013-02-15");
-		LinkedInJob job3 = new LinkedInJob(id, positionTitle, companyName,
-				location, postingDate);
-
-		id = 4;
-		positionTitle = "position4";
-		companyName = "company4";
-		location = "Aarschot";
-		postingDate = format.parse("2013-02-16");
-		LinkedInJob job4 = new LinkedInJob(id, positionTitle, companyName,
-				location, postingDate);
-
-		id = 5;
-		positionTitle = "position5";
-		companyName = "company5";
-		location = "Brussels Area";
-		postingDate = format.parse("2013-02-17");
-		LinkedInJob job5 = new LinkedInJob(id, positionTitle, companyName,
-				location, postingDate);
-
-		testData.add(job1);
-		testData.add(job2);
-		testData.add(job3);
-		testData.add(job4);
-		testData.add(job5);
-
-		return testData;
 	}
 
 	private class SeekBarHandler implements OnSeekBarChangeListener {
@@ -246,5 +198,4 @@ public class SearchBuilderActivity extends Activity {
 
 	}
 
-	
 }

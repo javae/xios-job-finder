@@ -80,6 +80,7 @@ public class SavedSearchActivity extends ListActivity {
 				SearchResultActivity.class);
 
 		SearchBuilder sb = (SearchBuilder) l.getAdapter().getItem(position);
+		
 		Bundle b = new Bundle();
 		b.putParcelable(SearchResultActivity.SEARCH_PARAMS, sb);
 		searchInt.putExtras(b);
