@@ -2,6 +2,7 @@ package be.xios.jobfinder;
 
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,6 +17,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.util.Log;
+import be.xios.jobfinder.data.JobFinderDAO;
+import be.xios.jobfinder.model.SearchBuilder;
 import be.xios.jobfinder.preference.TimePreference;
 import be.xios.jobfinder.service.JobSearchService;
 import be.xios.jobfinder.util.StringUtil;
@@ -24,10 +27,13 @@ public class SettingsFragment extends PreferenceFragment {
 
 	public static final String SELECTED_SAVED_SEARCH = "selected_saved_search";
 	private Resources resources;
+	private JobFinderDAO datasource;
 	
 	private SwitchPreference switchAlarm;
 	private ListPreference savedSearchPreference;
 	private TimePreference timeTaskPreference;
+	
+	private List<SearchBuilder> savedSearches;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -40,10 +46,25 @@ public class SettingsFragment extends PreferenceFragment {
 		switchAlarm = (SwitchPreference) findPreference(resources.getString(R.string.key_display_alarm));
 		switchAlarm.setOnPreferenceChangeListener(new JobSearchHandler());
 		
+		datasource = new JobFinderDAO(getActivity().getApplicationContext());
+		datasource.open();
+		savedSearches = datasource.getAllSavedSearches();
+		
 		savedSearchPreference = (ListPreference) findPreference(resources.getString(R.string.key_saved_search));
 		if (savedSearchPreference != null)
 			savedSearchPreference.setSummary(savedSearchPreference.getValue());
 		savedSearchPreference.setOnPreferenceChangeListener(new JobSearchHandler());
+		
+		CharSequence[] entries = new CharSequence[savedSearches.size()];
+		CharSequence[] entryValues = new CharSequence[savedSearches.size()];
+		int i = 0;
+		for (SearchBuilder savedSearch : savedSearches) {
+			entries[i] = savedSearch.getJobTitle();
+			entryValues[i] = savedSearch.getDbId() + "";
+			i++;
+		}
+		savedSearchPreference.setEntries(entries);
+		savedSearchPreference.setEntryValues(entryValues);
 		
 		timeTaskPreference = (TimePreference) findPreference(resources.getString(R.string.key_time_task));
 		timeTaskPreference.setOnPreferenceChangeListener(new JobSearchHandler());
@@ -87,7 +108,7 @@ public class SettingsFragment extends PreferenceFragment {
 		
 		private void setAlarm(AlarmManager alarmManager) throws ParseException {
 			Intent jobSearchIntent = new Intent(getActivity().getApplicationContext(), JobSearchService.class);
-			jobSearchIntent.putExtra(SELECTED_SAVED_SEARCH, savedSearchPreference.getValue());
+			jobSearchIntent.putExtra(SELECTED_SAVED_SEARCH, savedSearches.get(savedSearchPreference.findIndexOfValue(savedSearchPreference.getValue())));
 			pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 0, jobSearchIntent, 0);
 			
 			long day = 1000 * 24*3600;
@@ -98,9 +119,9 @@ public class SettingsFragment extends PreferenceFragment {
 			Calendar selectedTime = Calendar.getInstance();
 			selectedTime.setTimeInMillis(timeTaskPreference.getTime().getTime());
 	        
-			calendar.set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY));
-			calendar.set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE));
-			calendar.add(Calendar.SECOND, 0);
+//			calendar.set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY));
+//			calendar.set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE));
+			calendar.add(Calendar.SECOND, 5);
 			calendar.getTime();
 	        
 	        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), day, pendingIntent);
