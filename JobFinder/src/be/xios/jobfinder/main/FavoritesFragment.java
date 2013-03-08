@@ -3,6 +3,7 @@ package be.xios.jobfinder.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.xios.jobfinder.main.JobDetailActivity;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
