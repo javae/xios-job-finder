@@ -1,9 +1,7 @@
 package be.xios.jobfinder.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import be.xios.jobfinder.main.JobDetailActivity;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
@@ -13,36 +11,34 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import be.xios.jobfinder.R;
+import be.xios.jobfinder.data.FavoritesAdapter;
 import be.xios.jobfinder.data.JobFinderDAO;
-import be.xios.jobfinder.data.JobListAdapter;
 import be.xios.jobfinder.model.LinkedInJob;
 
 public class FavoritesFragment extends ListFragment {
-	
+
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "saved_search_fragment";
-	
+
 	private static final int myContextmenu_id = 1;
 	private static final int openMenuItem_Id = 2;
 	private static final int deleteMenuItem_Id = 3;
-	
+
 	private JobFinderDAO datasource;
-	private JobListAdapter jobListAdapter;
-	private ArrayAdapter<LinkedInJob> adapter;
-	
+	private FavoritesAdapter adapter;
+
 	public FavoritesFragment() {
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		getActivity().setTitle(R.string.title_activity_favorites);
 
 		datasource = new JobFinderDAO(getActivity().getApplicationContext());
@@ -50,23 +46,18 @@ public class FavoritesFragment extends ListFragment {
 
 		List<LinkedInJob> values = datasource.getAllFavJobs();
 
-		jobListAdapter = new JobListAdapter(getActivity().getApplicationContext(),
-				new ArrayList<LinkedInJob>());
-		jobListAdapter.addAll(values);
-		setListAdapter(jobListAdapter);
+		adapter = new FavoritesAdapter(getActivity().getApplicationContext(),
+				R.layout.listview_favorite_row, values);
 
-		adapter = new ArrayAdapter<LinkedInJob>(getActivity(),
-				android.R.layout.simple_list_item_1, values);
 		setListAdapter(adapter);
 
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		registerForContextMenu(getListView());
 		super.onActivityCreated(savedInstanceState);
 	}
-	
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
@@ -88,15 +79,15 @@ public class FavoritesFragment extends ListFragment {
 		case openMenuItem_Id:
 			selectedJob = (LinkedInJob) getListView().getAdapter().getItem(
 					info.position);
-			
+
 			openJobDetail(selectedJob);
 			break;
 		case deleteMenuItem_Id:
 			selectedJob = (LinkedInJob) getListView().getAdapter().getItem(
 					info.position);
 			datasource.deleteFavJob(selectedJob);
+			adapter.remove(selectedJob);
 			adapter.notifyDataSetChanged();
-			//TODO refresh werkt nog niet?
 			break;
 		default:
 			break;
@@ -119,7 +110,7 @@ public class FavoritesFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+
 		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
 		openJobDetail(job);
 	}
@@ -127,17 +118,19 @@ public class FavoritesFragment extends ListFragment {
 	private void openJobDetail(LinkedInJob job) {
 		Bundle arguments = new Bundle();
 		arguments.putParcelable(JobDetailFragment.JOB_SELECTED, job);
-		
+
 		if (getActivity().findViewById(R.id.menuitem_detail_container) != null) {
 			JobDetailFragment fragment = new JobDetailFragment();
 			fragment.setArguments(arguments);
-			
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+			FragmentTransaction transaction = getFragmentManager()
+					.beginTransaction();
 			transaction.replace(R.id.menuitem_detail_container, fragment);
 			transaction.addToBackStack(null);
 			transaction.commit();
 		} else {
-			Intent jobDetailIntent = new Intent(getActivity().getApplicationContext(), JobDetailActivity.class);
+			Intent jobDetailIntent = new Intent(getActivity()
+					.getApplicationContext(), JobDetailActivity.class);
 			jobDetailIntent.putExtras(arguments);
 			startActivity(jobDetailIntent);
 		}

@@ -29,7 +29,6 @@ public class SavedSearchFragment extends ListFragment {
 	private static final int openMenuItem_Id = 2;
 	private static final int deleteMenuItem_Id = 3;
 	private JobFinderDAO datasource;
-	//private ArrayAdapter<SearchBuilder> adapter;
 	private SavedSearchAdapter adapter;
 
 	public SavedSearchFragment() {
@@ -47,10 +46,7 @@ public class SavedSearchFragment extends ListFragment {
 		adapter = new SavedSearchAdapter(getActivity().getApplicationContext(), R.layout.listview_savedsearch_row, values);
 		
 		setListAdapter(adapter);
-		
-//		adapter = new ArrayAdapter<SearchBuilder>(getActivity(),
-//				android.R.layout.simple_list_item_1, values);
-//		setListAdapter(adapter);
+
 	}
 
 	@Override
@@ -105,8 +101,6 @@ public class SavedSearchFragment extends ListFragment {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		// AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-		// int position = info.position;
 		menu.setHeaderTitle("Kies een actie");
 		menu.add(myContextmenu_id, openMenuItem_Id, 1, "Open");
 		menu.add(myContextmenu_id, deleteMenuItem_Id, 2, "Verwijder");
@@ -129,8 +123,8 @@ public class SavedSearchFragment extends ListFragment {
 			selectedSearch = (SearchBuilder) getListView().getAdapter()
 					.getItem(info.position);
 			datasource.deleteSavedSearch(selectedSearch);
+			adapter.remove(selectedSearch);
 			adapter.notifyDataSetChanged();
-			// TODO refresh werkt nog niet?
 			break;
 
 		default:
