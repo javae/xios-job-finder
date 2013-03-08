@@ -69,14 +69,6 @@ public class JobFinderDAO {
 		long insertId = database.insert(JobFinderDB.SavedSearches.TABLE_NAME,
 				null, values);
 		return insertId;
-
-		// Cursor cursor = database.query(JobFinderDB.SavedSearches.TABLE_NAME,
-		// allSavedSearchColumns, JobFinderDB.SavedSearches.COL_ID + " = "
-		// + insertId, null, null, null, null);
-		// cursor.moveToFirst();
-		// SearchBuilder newSavedSearch = cursorToSearchBuilder(cursor);
-		// cursor.close();
-		// return newSavedSearch;
 	}
 
 	public long createFavoriteJob(LinkedInJob currentJob) {
@@ -101,14 +93,6 @@ public class JobFinderDAO {
 					null, values);
 		}
 		return insertId;
-
-		// Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,
-		// allFavColumns, JobFinderDB.JobFavorites.COL_ID + " = "
-		// + insertId, null, null, null, null);
-		// cursor.moveToFirst();
-		// LinkedInJob newFavJob = cursorToLinkedInJob(cursor);
-		// cursor.close();
-		// return newFavJob;
 	}
 
 	public void deleteSavedSearch(SearchBuilder savedSearch) {
@@ -120,8 +104,8 @@ public class JobFinderDAO {
 
 	public void deleteFavJob(LinkedInJob favJob) {
 		long id = favJob.getDbId();
-		database.delete(JobFinderDB.SavedSearches.TABLE_NAME,
-				JobFinderDB.SavedSearches.COL_ID + " = " + id, null);
+		database.delete(JobFinderDB.JobFavorites.TABLE_NAME,
+				JobFinderDB.JobFavorites.COL_ID + " = " + id, null);
 		Log.d("JobFinderDAO", "Favorite job deleted with id: " + id);
 	}
 
@@ -137,7 +121,6 @@ public class JobFinderDAO {
 			savedSearches.add(savedSearch);
 			cursor.moveToNext();
 		}
-		// Make sure to close the cursor
 		cursor.close();
 		return savedSearches;
 	}
@@ -154,7 +137,6 @@ public class JobFinderDAO {
 			favJobs.add(favJob);
 			cursor.moveToNext();
 		}
-		// Make sure to close the cursor
 		cursor.close();
 		return favJobs;
 	}

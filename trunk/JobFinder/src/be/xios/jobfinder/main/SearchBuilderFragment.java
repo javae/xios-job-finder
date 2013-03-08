@@ -185,6 +185,7 @@ public class SearchBuilderFragment extends Fragment {
 
 		String keywordsValue = keywords.getText().toString();
 		String jobtitleValue = jobTitle.getText().toString();
+		String postalcodeValue = postalCode.getText().toString();
 		String countryValue = CountryData.getCountryList().get(country.getSelectedItemPosition()).getIso2();
 		
 		// distance from kilometer to miles
@@ -195,6 +196,7 @@ public class SearchBuilderFragment extends Fragment {
 
 		sb.setKeywords(keywordsValue);
 		sb.setJobTitle(jobtitleValue);
+		sb.setPostalCode(postalcodeValue);
 		sb.setCountryCode(countryValue);
 		sb.setDistance(dist);
 		sb.setJobFunction(function);
