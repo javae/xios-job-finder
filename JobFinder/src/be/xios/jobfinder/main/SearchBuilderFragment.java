@@ -3,11 +3,6 @@ package be.xios.jobfinder.main;
 import java.util.List;
 import java.util.Locale;
 
-import be.xios.jobfinder.R;
-import be.xios.jobfinder.main.SearchResultActivity;
-import be.xios.jobfinder.data.Country;
-import be.xios.jobfinder.data.CountryData;
-import be.xios.jobfinder.model.SearchBuilder;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -22,17 +17,21 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.SeekBar.OnSeekBarChangeListener;
+import be.xios.jobfinder.R;
+import be.xios.jobfinder.data.Country;
+import be.xios.jobfinder.data.CountryData;
+import be.xios.jobfinder.model.SearchBuilder;
 
 public class SearchBuilderFragment extends Fragment {
 	
@@ -70,7 +69,6 @@ public class SearchBuilderFragment extends Fragment {
 
 		Button btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new ButtonHandler());
-		//btnSearch.setOnLongClickListener(new LongClickHandler());
 		ImageButton btnGetPC = (ImageButton) rootView.findViewById(R.id.btnGetLocation);
 		btnGetPC.setOnClickListener(new ButtonHandler());
 		
@@ -131,9 +129,8 @@ public class SearchBuilderFragment extends Fragment {
 			}
 		} catch (Exception e) {
 			Toast.makeText(getActivity().getApplicationContext(),
-					"Locatie kon niet worden bepaald.", Toast.LENGTH_SHORT)
+					"Locatie kon niet worden bepaald.", Toast.LENGTH_LONG)
 					.show();
-			//e.printStackTrace();
 		}
 	}
 
@@ -218,17 +215,14 @@ public class SearchBuilderFragment extends Fragment {
 				int distance = progress * 5;
 				tvDistance.setText(" " + distance + " km");
 			}
-
 		}
 
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 		}
 
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 		}
 
 	}

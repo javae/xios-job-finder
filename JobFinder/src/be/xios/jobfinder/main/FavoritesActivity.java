@@ -9,8 +9,6 @@ import android.view.MenuItem;
 
 public class FavoritesActivity extends Activity {
 	
-	public static final String JOB_SELECTED = "selected_job";
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

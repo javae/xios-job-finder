@@ -56,8 +56,6 @@ public class SearchResultFragment extends ListFragment {
 		Bundle bundle = getArguments();
 		searchData = bundle.getParcelable(SEARCH_PARAMS);
 
-		// TODO: searchdata wordt hier goed binnengehaald, ook vanuit de saved
-				// searches maar blijkbaar loopt er iets mis hieronder?
 		jobListAdapter = new JobListAdapter(getActivity().getApplicationContext(),
 				new ArrayList<LinkedInJob>());
 		LinkedInJobSearch search = new LinkedInJobSearch(jobListAdapter);
@@ -83,7 +81,7 @@ public class SearchResultFragment extends ListFragment {
 			long newID = datasource.createSavedSearch(searchData);
 			if (newID > 0) {
 				Toast.makeText(getActivity().getApplicationContext(),
-						"Zoekopdracht bewaard met ID " + newID,
+						"Zoekopdracht succesvol bewaard.",
 						Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(getActivity().getApplicationContext(),

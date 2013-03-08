@@ -92,7 +92,7 @@ public class JobDetailFragment extends Fragment {
 			datasource.open();
 			long newID = datasource.createFavoriteJob(currentJob);
 			if (newID > 0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Favoriet toegevoegd met ID " + newID, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity().getApplicationContext(), "Favoriet succesvol toegevoegd.", Toast.LENGTH_LONG).show();
 			}  if (newID == -1) {
 				Toast.makeText(getActivity().getApplicationContext(),
 						"Favoriet bestaat reeds.", Toast.LENGTH_LONG).show();

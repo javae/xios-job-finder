@@ -2,16 +2,15 @@ package be.xios.jobfinder.data;
 
 import java.util.List;
 
-import be.xios.jobfinder.R;
-import be.xios.jobfinder.model.SearchBuilder;
-import be.xios.jobfinder.util.JobFinderUtil;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import be.xios.jobfinder.R;
+import be.xios.jobfinder.model.SearchBuilder;
+import be.xios.jobfinder.util.JobFinderUtil;
 
 public class SavedSearchAdapter extends ArrayAdapter<SearchBuilder> {
 
