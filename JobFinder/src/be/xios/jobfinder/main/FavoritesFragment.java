@@ -3,23 +3,21 @@ package be.xios.jobfinder.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.xios.jobfinder.main.JobDetailActivity;
-import be.xios.jobfinder.R;
-import be.xios.jobfinder.data.JobFinderDAO;
-import be.xios.jobfinder.data.JobListAdapter;
-import be.xios.jobfinder.model.LinkedInJob;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import be.xios.jobfinder.R;
+import be.xios.jobfinder.data.JobFinderDAO;
+import be.xios.jobfinder.data.JobListAdapter;
+import be.xios.jobfinder.model.LinkedInJob;
 
 public class FavoritesFragment extends ListFragment {
 	
@@ -91,13 +89,7 @@ public class FavoritesFragment extends ListFragment {
 			selectedJob = (LinkedInJob) getListView().getAdapter().getItem(
 					info.position);
 			
-			
-			Intent jobDetailIntent = new Intent(getActivity(), JobDetailActivity.class);
-			Bundle b = new Bundle();
-			b.putParcelable(JobDetailFragment.JOB_SELECTED, selectedJob);
-
-			jobDetailIntent.putExtras(b);
-			startActivity(jobDetailIntent);
+			openJobDetail(selectedJob);
 			break;
 		case deleteMenuItem_Id:
 			selectedJob = (LinkedInJob) getListView().getAdapter().getItem(
@@ -130,8 +122,12 @@ public class FavoritesFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		
 		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
+		openJobDetail(job);
+	}
+
+	private void openJobDetail(LinkedInJob job) {
 		Bundle arguments = new Bundle();
-		arguments.putParcelable("selectedJob", job);
+		arguments.putParcelable(JobDetailFragment.JOB_SELECTED, job);
 		
 		if (getActivity().findViewById(R.id.menuitem_detail_container) != null) {
 			JobDetailFragment fragment = new JobDetailFragment();
@@ -142,7 +138,7 @@ public class FavoritesFragment extends ListFragment {
 			transaction.addToBackStack(null);
 			transaction.commit();
 		} else {
-			Intent jobDetailIntent = new Intent(v.getContext(), JobDetailActivity.class);
+			Intent jobDetailIntent = new Intent(getActivity().getApplicationContext(), JobDetailActivity.class);
 			jobDetailIntent.putExtras(arguments);
 			startActivity(jobDetailIntent);
 		}

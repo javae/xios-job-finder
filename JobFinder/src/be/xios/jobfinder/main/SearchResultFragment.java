@@ -7,7 +7,18 @@ import java.util.List;
 
 import org.scribe.model.Verb;
 
-import be.xios.jobfinder.main.JobDetailActivity;
+import android.app.FragmentTransaction;
+import android.app.ListFragment;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 import be.xios.jobfinder.MapActivity;
 import be.xios.jobfinder.R;
 import be.xios.jobfinder.connector.LinkedInConnector;
@@ -16,20 +27,6 @@ import be.xios.jobfinder.data.JobListAdapter;
 import be.xios.jobfinder.json.LinkedInJobParser;
 import be.xios.jobfinder.model.LinkedInJob;
 import be.xios.jobfinder.model.SearchBuilder;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
 
 public class SearchResultFragment extends ListFragment {
 	
