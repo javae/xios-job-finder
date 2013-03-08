@@ -3,7 +3,7 @@ package be.xios.jobfinder.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.xios.jobfinder.JobDetailActivity;
+import be.xios.jobfinder.main.JobDetailActivity;
 import be.xios.jobfinder.R;
 import be.xios.jobfinder.data.JobFinderDAO;
 import be.xios.jobfinder.data.JobListAdapter;
@@ -13,9 +13,13 @@ import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class FavoritesFragment extends ListFragment {
 	
@@ -25,8 +29,13 @@ public class FavoritesFragment extends ListFragment {
 	 */
 	public static final String ARG_ITEM_ID = "saved_search_fragment";
 	
+	private static final int myContextmenu_id = 1;
+	private static final int openMenuItem_Id = 2;
+	private static final int deleteMenuItem_Id = 3;
+	
 	private JobFinderDAO datasource;
 	private JobListAdapter jobListAdapter;
+	private ArrayAdapter<LinkedInJob> adapter;
 	
 	public FavoritesFragment() {
 	}
@@ -47,11 +56,62 @@ public class FavoritesFragment extends ListFragment {
 		jobListAdapter.addAll(values);
 		setListAdapter(jobListAdapter);
 
-		ArrayAdapter<LinkedInJob> adapter = new ArrayAdapter<LinkedInJob>(getActivity(),
+		adapter = new ArrayAdapter<LinkedInJob>(getActivity(),
 				android.R.layout.simple_list_item_1, values);
 		setListAdapter(adapter);
 //		getActivity().registerForContextMenu(getListView());
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		registerForContextMenu(getListView());
+		super.onActivityCreated(savedInstanceState);
+	}
+	
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		//AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+		//int position = info.position;
+		menu.setHeaderTitle("Kies een actie");
+		menu.add(myContextmenu_id, openMenuItem_Id, 1, "Open");
+		menu.add(myContextmenu_id, deleteMenuItem_Id, 2, "Verwijder");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		LinkedInJob selectedJob;
+
+		switch (item.getItemId()) {
+		case openMenuItem_Id:
+			selectedJob = (LinkedInJob) getListView().getAdapter().getItem(
+					info.position);
+			
+			
+			Intent jobDetailIntent = new Intent(getActivity(), JobDetailActivity.class);
+			Bundle b = new Bundle();
+			b.putParcelable(JobDetailFragment.JOB_SELECTED, selectedJob);
+
+			jobDetailIntent.putExtras(b);
+			startActivity(jobDetailIntent);
+			break;
+		case deleteMenuItem_Id:
+			selectedJob = (LinkedInJob) getListView().getAdapter().getItem(
+					info.position);
+			datasource.deleteFavJob(selectedJob);
+			adapter.notifyDataSetChanged();
+			//TODO refresh werkt nog niet?
+			break;
+		default:
+			break;
+		}
+		return super.onContextItemSelected(item);
+	}
+
 	
 	@Override
 	public void onResume() {

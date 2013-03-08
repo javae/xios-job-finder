@@ -22,6 +22,7 @@ import be.xios.jobfinder.model.LinkedInJobDetail;
 public class JobDetailActivity extends Activity {
 
 	public static final String JOB_ID = "job_id";
+	public static final String JOB_SELECTED = "selected_job";
 
 	private TextView jobDescription;
 	private TextView skills;
@@ -35,8 +36,13 @@ public class JobDetailActivity extends Activity {
 		setContentView(R.layout.activity_job_detail);
 
 		Bundle bundle = getIntent().getExtras();
-		currentJob = bundle.getParcelable("selectedJob");
-
+		currentJob = bundle.getParcelable(JOB_SELECTED);
+		
+		TextView header = (TextView)findViewById(R.id.tvJobHeader);
+		String headerText = currentJob.getPositionTitle() + " @ " + currentJob.getCompanyName();
+		header.setText(headerText);
+		
+		//zoek details op
 		int jobId = currentJob.getId();
 		JobDetailLookup jobDetailLookup = new JobDetailLookup(jobId);
 		jobDetailLookup.execute();
