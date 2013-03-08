@@ -101,45 +101,6 @@ public class SearchBuilderFragment extends Fragment {
 		inflater.inflate(R.menu.activity_search_params, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCE_IDENTIFIER, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = preferences.edit();
-		
-		editor.putString(key_keywords, keywords.getText().toString());
-		editor.putString(key_jobtitle, jobTitle.getText().toString());
-		editor.putString(key_country, CountryData.getCountryList().get(country.getSelectedItemPosition()).getIso2());
-		editor.putString(key_postalcode, postalCode.getText().toString());
-		editor.putInt(key_distance, distance.getProgress());
-		editor.putInt(key_function, functions.getSelectedItemPosition());
-		editor.putInt(key_industry, industries.getSelectedItemPosition());
-		
-		editor.commit();
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCE_IDENTIFIER, Context.MODE_PRIVATE);
-		
-		String keywords = preferences.getString(key_keywords, "");
-		String jobtitle = preferences.getString(key_jobtitle, "");
-		String country = preferences.getString(key_country, "");
-		String postalcode = preferences.getString(key_postalcode, "");
-		int distance = preferences.getInt(key_distance, 0);
-		int function = preferences.getInt(key_function, 0);
-		int industry = preferences.getInt(key_industry, 0);
-		
-		this.keywords.setText(keywords);
-		this.jobTitle.setText(jobtitle);
-		this.country.setSelection(CountryData.getCountryList().indexOf(country));
-		this.postalCode.setText(postalcode);
-		this.distance.setProgress(distance);
-		this.functions.setSelection(function);
-		this.industries.setSelection(industry);
-	}
 	
 	private void setLocationFields() {
 		String countryCode = null;

@@ -28,7 +28,12 @@ public class LinkedInJobParser {
 		
 		reader.beginObject();
 		while (reader.hasNext()) {
-			String name = reader.nextName();
+			String name = "";
+			try {
+				name = reader.nextName();
+			} catch (Exception e) {
+				reader.skipValue();
+			}
 			if ("jobs".equals(name))
 				jobs = readJobValues(reader);
 		}
