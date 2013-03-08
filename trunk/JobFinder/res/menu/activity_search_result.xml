@@ -3,8 +3,14 @@
     <item
         android:id="@+id/menu_save_searchparams"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
+         android:icon="@drawable/ic_save_search"
         android:title="@string/menu_saveSearch"/>
-    <item android:id="@+id/menu_mapview" android:title="@string/menu_toggle_map" android:showAsAction="ifRoom|withText"></item>
+    <item
+        android:id="@+id/menu_mapview"
+        android:showAsAction="always"
+         android:icon="@drawable/ic_mapview"
+        android:title="@string/menu_toggle_map">
+    </item>
 
 </menu>
