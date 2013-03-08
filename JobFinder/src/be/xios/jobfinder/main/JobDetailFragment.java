@@ -56,6 +56,7 @@ public class JobDetailFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 		View rootView = inflater.inflate(R.layout.activity_job_detail, container, false);
 		
 		Bundle bundle = getArguments();
@@ -73,7 +74,7 @@ public class JobDetailFragment extends Fragment {
 		skills = (TextView) rootView.findViewById(R.id.tvSkills_content);
 		companyDescription = (TextView) rootView.findViewById(R.id.tvCompanyDesc_content);
 		
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return rootView;
 	}
 	
 	@Override
