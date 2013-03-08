@@ -33,6 +33,7 @@ public class JobDetailFragment extends Fragment {
 	public static final String ARG_ITEM_ID = "search_result_fragment";
 	
 	public static final String JOB_ID = "job_id";
+	public static final String JOB_SELECTED = "selected_job";
 	
 	private TextView jobDescription;
 	private TextView skills;
@@ -58,7 +59,11 @@ public class JobDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.activity_job_detail, container, false);
 		
 		Bundle bundle = getArguments();
-		currentJob = bundle.getParcelable("selectedJob");
+		currentJob = bundle.getParcelable(JOB_SELECTED);
+		
+		TextView header = (TextView)rootView.findViewById(R.id.tvJobHeader);
+		String headerText = currentJob.getPositionTitle() + " @ " + currentJob.getCompanyName();
+		header.setText(headerText);
 		
 		int jobId = currentJob.getId();
 		JobDetailLookup jobDetailLookup = new JobDetailLookup(jobId);

@@ -9,6 +9,8 @@ import android.view.MenuItem;
 
 public class JobDetailActivity extends Activity {
 	
+	public static final String JOB_SELECTED = "selected_job";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

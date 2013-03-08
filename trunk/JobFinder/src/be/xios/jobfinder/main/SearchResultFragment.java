@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.scribe.model.Verb;
 
-import be.xios.jobfinder.JobDetailActivity;
+import be.xios.jobfinder.main.JobDetailActivity;
 import be.xios.jobfinder.MapActivity;
 import be.xios.jobfinder.R;
 import be.xios.jobfinder.connector.LinkedInConnector;
@@ -59,6 +59,8 @@ public class SearchResultFragment extends ListFragment {
 		Bundle bundle = getArguments();
 		searchData = bundle.getParcelable(SEARCH_PARAMS);
 
+		// TODO: searchdata wordt hier goed binnengehaald, ook vanuit de saved
+				// searches maar blijkbaar loopt er iets mis hieronder?
 		jobListAdapter = new JobListAdapter(getActivity().getApplicationContext(),
 				new ArrayList<LinkedInJob>());
 		LinkedInJobSearch search = new LinkedInJobSearch(jobListAdapter);
@@ -84,11 +86,11 @@ public class SearchResultFragment extends ListFragment {
 			long newID = datasource.createSavedSearch(searchData);
 			if (newID > 0) {
 				Toast.makeText(getActivity().getApplicationContext(),
-						"Favoriet toegevoegd met ID " + newID,
+						"Zoekopdracht bewaard met ID " + newID,
 						Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(getActivity().getApplicationContext(),
-						"Favoriet toevoegen mislukt", Toast.LENGTH_LONG).show();
+						"Bewaren mislukt!", Toast.LENGTH_LONG).show();
 			}
 
 			break;
@@ -114,7 +116,7 @@ public class SearchResultFragment extends ListFragment {
 		
 		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
 		Bundle arguments = new Bundle();
-		arguments.putParcelable("selectedJob", job);
+		arguments.putParcelable(JobDetailFragment.JOB_SELECTED, job);
 		
 		if (getActivity().findViewById(R.id.menuitem_detail_container) != null) {
 			JobDetailFragment fragment = new JobDetailFragment();

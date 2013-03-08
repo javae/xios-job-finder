@@ -39,7 +39,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 				+ JobFinderDB.JobFavorites.COL_POSITION_TITLE + " TEXT,"
 				+ JobFinderDB.JobFavorites.COL_COMPANY_NAME + " TEXT,"
 				+ JobFinderDB.JobFavorites.COL_LOCATION + " TEXT,"
-				+ JobFinderDB.JobFavorites.COL_POSTING_DATE + " TEXT)";
+				+ JobFinderDB.JobFavorites.COL_POSTING_DATE + " INTEGER)";
 
 		try {
 			db.execSQL(sqlCreate);

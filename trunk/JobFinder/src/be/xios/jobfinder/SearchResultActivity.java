@@ -102,7 +102,7 @@ public class SearchResultActivity extends ListActivity {
 		LinkedInJob job = (LinkedInJob) l.getAdapter().getItem(position);
 
 		Bundle b = new Bundle();
-		b.putParcelable("selectedJob", job);
+		b.putParcelable(JobDetailActivity.JOB_SELECTED, job);
 
 		jobDetailIntent.putExtras(b);
 		startActivity(jobDetailIntent);

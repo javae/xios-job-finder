@@ -3,16 +3,20 @@ package be.xios.jobfinder.main;
 import java.util.List;
 
 import be.xios.jobfinder.R;
-import be.xios.jobfinder.SearchResultActivity;
+import be.xios.jobfinder.main.SearchResultActivity;
 import be.xios.jobfinder.data.JobFinderDAO;
 import be.xios.jobfinder.model.SearchBuilder;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class SavedSearchFragment extends ListFragment {
 	
@@ -22,7 +26,11 @@ public class SavedSearchFragment extends ListFragment {
 	 */
 	public static final String ARG_ITEM_ID = "saved_search_fragment";
 	
+	private static final int myContextmenu_id = 1;
+	private static final int openMenuItem_Id = 2;
+	private static final int deleteMenuItem_Id = 3;
 	private JobFinderDAO datasource;
+	private ArrayAdapter<SearchBuilder> adapter;
 	
 	public SavedSearchFragment() {
 	}
@@ -35,7 +43,7 @@ public class SavedSearchFragment extends ListFragment {
 		datasource.open();
 
 		List<SearchBuilder> values = datasource.getAllSavedSearches();
-		ArrayAdapter<SearchBuilder> adapter = new ArrayAdapter<SearchBuilder>(
+		adapter = new ArrayAdapter<SearchBuilder>(
 				getActivity(), android.R.layout.simple_list_item_1, values);
 		setListAdapter(adapter);
 	}
@@ -58,7 +66,7 @@ public class SavedSearchFragment extends ListFragment {
 
 		SearchBuilder sb = (SearchBuilder) l.getAdapter().getItem(position);
 		Bundle arguments = new Bundle();
-		arguments.putParcelable(SearchResultActivity.SEARCH_PARAMS, sb);
+		arguments.putParcelable(SearchResultFragment.SEARCH_PARAMS, sb);
 		
 		if (getActivity().findViewById(R.id.menuitem_detail_container) != null) {
 			SearchResultFragment fragment = new SearchResultFragment();
@@ -76,5 +84,56 @@ public class SavedSearchFragment extends ListFragment {
 		
 		
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		registerForContextMenu(getListView());
+		super.onActivityCreated(savedInstanceState);
+	}
+	
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		// AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+		// int position = info.position;
+		menu.setHeaderTitle("Kies een actie");
+		menu.add(myContextmenu_id, openMenuItem_Id, 1, "Open");
+		menu.add(myContextmenu_id, deleteMenuItem_Id, 2, "Verwijder");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		SearchBuilder selectedSearch;
+
+		switch (item.getItemId()) {
+		case openMenuItem_Id:
+			Intent searchInt = new Intent(getActivity(),
+					SearchResultActivity.class);
+
+			selectedSearch = (SearchBuilder) getListView().getAdapter()
+					.getItem(info.position);
+
+			Bundle b = new Bundle();
+			b.putParcelable(SearchResultFragment.SEARCH_PARAMS, selectedSearch);
+			searchInt.putExtras(b);
+			startActivity(searchInt);
+			break;
+			
+		case deleteMenuItem_Id:
+			selectedSearch = (SearchBuilder) getListView().getAdapter()
+					.getItem(info.position);
+			datasource.deleteSavedSearch(selectedSearch);
+			adapter.notifyDataSetChanged();
+			//TODO refresh werkt nog niet?
+			break;
+			
+		default:
+			break;
+		}
+		return super.onContextItemSelected(item);
+	}
+
 	
 }

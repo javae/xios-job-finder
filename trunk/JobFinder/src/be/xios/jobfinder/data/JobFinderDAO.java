@@ -3,6 +3,7 @@ package be.xios.jobfinder.data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,8 +30,7 @@ public class JobFinderDAO {
 			JobFinderDB.SavedSearches.COL_INDUSTRY,
 			JobFinderDB.SavedSearches.COL_JOBFUNCTION };
 
-	private String[] allFavColumns = { 
-			JobFinderDB.JobFavorites.COL_ID,
+	private String[] allFavColumns = { JobFinderDB.JobFavorites.COL_ID,
 			JobFinderDB.JobFavorites.COL_LI_ID,
 			JobFinderDB.JobFavorites.COL_POSITION_TITLE,
 			JobFinderDB.JobFavorites.COL_COMPANY_NAME,
@@ -81,10 +81,11 @@ public class JobFinderDAO {
 
 	public long createFavoriteJob(LinkedInJob currentJob) {
 		long insertId = -1;
-		//kijk of deze id al bij favorieten staat!		
-		Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME, allFavColumns, 
-                JobFinderDB.JobFavorites.COL_LI_ID + " = " + currentJob.getId(), null, null, null, null);
-		if (cursor.getCount() > 0) {
+		// kijk of deze id al bij favorieten staat!
+		Cursor cursor = database.query(JobFinderDB.JobFavorites.TABLE_NAME,
+				allFavColumns, JobFinderDB.JobFavorites.COL_LI_ID + " = "
+						+ currentJob.getId(), null, null, null, null);
+		if (cursor.getCount() <= 0) {
 			ContentValues values = new ContentValues();
 			values.put(JobFinderDB.JobFavorites.COL_LI_ID, currentJob.getId());
 			values.put(JobFinderDB.JobFavorites.COL_POSITION_TITLE,
@@ -94,8 +95,8 @@ public class JobFinderDAO {
 			values.put(JobFinderDB.JobFavorites.COL_LOCATION,
 					currentJob.getLocation());
 			values.put(JobFinderDB.JobFavorites.COL_POSTING_DATE, currentJob
-					.getPostingDate().toString());
-			
+					.getPostingDate().getTime());
+
 			insertId = database.insert(JobFinderDB.JobFavorites.TABLE_NAME,
 					null, values);
 		}
@@ -176,20 +177,12 @@ public class JobFinderDAO {
 	private LinkedInJob cursorToLinkedInJob(Cursor cursor) {
 		LinkedInJob favJob = new LinkedInJob();
 
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD",
-				Locale.getDefault());
-
 		favJob.setDbId(cursor.getLong(0));
 		favJob.setId(cursor.getInt(1)); // = linkedinjobID
 		favJob.setPositionTitle(cursor.getString(2));
 		favJob.setCompanyName(cursor.getString(3));
 		favJob.setLocation(cursor.getString(4));
-		try {
-			favJob.setPostingDate(format.parse(cursor.getString(5)));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		favJob.setPostingDate(new Date(cursor.getLong(5)));
 
 		return favJob;
 	}
