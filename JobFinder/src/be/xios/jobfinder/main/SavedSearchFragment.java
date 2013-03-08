@@ -2,21 +2,20 @@ package be.xios.jobfinder.main;
 
 import java.util.List;
 
-import be.xios.jobfinder.R;
-import be.xios.jobfinder.main.SearchResultActivity;
-import be.xios.jobfinder.data.JobFinderDAO;
-import be.xios.jobfinder.model.SearchBuilder;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ListView;
+import be.xios.jobfinder.R;
+import be.xios.jobfinder.data.JobFinderDAO;
+import be.xios.jobfinder.data.SavedSearchAdapter;
+import be.xios.jobfinder.model.SearchBuilder;
 
 public class SavedSearchFragment extends ListFragment {
 
@@ -30,7 +29,8 @@ public class SavedSearchFragment extends ListFragment {
 	private static final int openMenuItem_Id = 2;
 	private static final int deleteMenuItem_Id = 3;
 	private JobFinderDAO datasource;
-	private ArrayAdapter<SearchBuilder> adapter;
+	//private ArrayAdapter<SearchBuilder> adapter;
+	private SavedSearchAdapter adapter;
 
 	public SavedSearchFragment() {
 	}
@@ -43,9 +43,14 @@ public class SavedSearchFragment extends ListFragment {
 		datasource.open();
 
 		List<SearchBuilder> values = datasource.getAllSavedSearches();
-		adapter = new ArrayAdapter<SearchBuilder>(getActivity(),
-				android.R.layout.simple_list_item_1, values);
+		
+		adapter = new SavedSearchAdapter(getActivity().getApplicationContext(), R.layout.listview_savedsearch_row, values);
+		
 		setListAdapter(adapter);
+		
+//		adapter = new ArrayAdapter<SearchBuilder>(getActivity(),
+//				android.R.layout.simple_list_item_1, values);
+//		setListAdapter(adapter);
 	}
 
 	@Override

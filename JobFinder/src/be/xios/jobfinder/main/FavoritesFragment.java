@@ -58,7 +58,7 @@ public class FavoritesFragment extends ListFragment {
 		adapter = new ArrayAdapter<LinkedInJob>(getActivity(),
 				android.R.layout.simple_list_item_1, values);
 		setListAdapter(adapter);
-//		getActivity().registerForContextMenu(getListView());
+
 	}
 	
 	@Override
@@ -72,8 +72,7 @@ public class FavoritesFragment extends ListFragment {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		//AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-		//int position = info.position;
+
 		menu.setHeaderTitle("Kies een actie");
 		menu.add(myContextmenu_id, openMenuItem_Id, 1, "Open");
 		menu.add(myContextmenu_id, deleteMenuItem_Id, 2, "Verwijder");
@@ -105,7 +104,6 @@ public class FavoritesFragment extends ListFragment {
 		return super.onContextItemSelected(item);
 	}
 
-	
 	@Override
 	public void onResume() {
 		datasource.open();
