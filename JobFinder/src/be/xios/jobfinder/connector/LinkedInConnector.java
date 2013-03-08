@@ -20,7 +20,6 @@ public class LinkedInConnector {
 	private static final String LINKED_IN_API_SECRET = "CxMoptwPqRISkG5f";
 	private static final String LINKED_IN_API_USER_TOKEN = "222277af-c1ea-4e3d-aa5e-b6b9ed4dc77b";
 	private static final String LINKED_IN_API_USER_SECRET = "64bc93d2-09c8-4fbf-af6f-7a15fff71e4c";
-//	private static final String LINKED_IN_AUTH_URL = "https://www.linkedin.com/uas/oauth/authenticate";
 
 	private ServiceBuilder serviceBuilder;
 	private OAuthService authenticationService;
@@ -54,7 +53,6 @@ public class LinkedInConnector {
 		OAuthRequest request = new OAuthRequest(verb, requestUrl);
 		request.addHeader("x-li-format", "json");
 		request.addHeader("content-type", "application/json");
-//		request.addPayload(requestObject.toString());
 		
 		if (StringUtil.isNotBlank(searchBuilder.getKeywords()))
 			request.addQuerystringParameter("keywords", searchBuilder.getKeywords());
@@ -82,11 +80,12 @@ public class LinkedInConnector {
 			request.addQuerystringParameter("facet", "industry," + searchBuilder.getIndustry());
 		if (StringUtil.isNotBlank(searchBuilder.getJobFunction()))
 			request.addQuerystringParameter("facet", "job-function," + searchBuilder.getJobFunction());
+		
+		request.addQuerystringParameter("count", "20");
 
 		authenticationService.signRequest(accessToken, request);
 
 		Response response = request.send();
-//		System.out.println(response.getBody());
 		return response.getStream();
 	}
 	
@@ -98,7 +97,6 @@ public class LinkedInConnector {
 		authenticationService.signRequest(accessToken, request);
 		
 		Response response = request.send();
-//		System.out.println(response.getBody());
 		return response.getStream();
 	}
 	
