@@ -33,22 +33,12 @@ public class MainActivity extends Activity implements MenuFragment.Callbacks {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menuitem_list);
-
-		if (findViewById(R.id.menuitem_detail_container) != null) {
-			// The detail container view will be present only in the
-			// large-screen layouts (res/values-large and
-			// res/values-sw600dp). If this view is present, then the
-			// activity should be in two-pane mode.
-			mTwoPane = true;
-
-			// In two-pane mode, list items should be given the
-			// 'activated' state when touched.
-			((MenuFragment) getFragmentManager()
-					.findFragmentById(R.id.menuitem_list))
-					.setActivateOnItemClick(true);
-		}
-
-		// TODO: If exposing deep links into your app, handle intents here.
+		
+		// The detail container view will be present only in the
+		// large-screen layouts (res/values-large and
+		// res/values-sw600dp). If this view is present, then the
+		// activity should be in two-pane mode.
+		mTwoPane = findViewById(R.id.menuitem_detail_container) != null;
 	}
 
 	/**
