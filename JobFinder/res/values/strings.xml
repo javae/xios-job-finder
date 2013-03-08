@@ -16,17 +16,17 @@
     <!-- Saved searches -->
     <string name="title_activity_saved_search">Bewaarde zoekopdrachten</string>
     <string name="no_saved_searches">Geen bewaarde zoekopdrachten gevonden.</string>
-    
+
     <!-- Saved searches menu -->
     <string name="menu_delete">Verwijder</string>
 
     <!-- Favorites -->
     <string name="title_activity_favorites">Favoriete jobs</string>
     <string name="no_favorites">Geen favoriete jobs gevonden.</string>
-        
+
     <!-- JobDetail Menu -->
     <string name="add_favorite">Favoriet</string>
-    
+
     <!-- SearchResult Menu -->
     <string name="menu_saveSearch">Bewaar zoekopdracht</string>
 
@@ -99,7 +99,6 @@
         <item>Training</item>
         <item>Writing / Editing</item>
     </string-array>
-    
     <string-array name="job_function_codes">
         <item></item>
         <item>acct</item>
@@ -138,7 +137,6 @@
         <item>trng</item>
         <item>wrt</item>
     </string-array>
-    
     <string-array name="industries">
         <item>No selection</item>
         <item>Accounting</item>
@@ -289,7 +287,6 @@
         <item>Wireless</item>
         <item>Writing and Editing</item>
     </string-array>
-    
     <string-array name="industry_codes">
         <item></item>
         <item>94</item>
@@ -438,12 +435,13 @@
         <item>142</item>
         <item>119</item>
         <item>103</item>
-</string-array>
+    </string-array>
 
     <!-- Jobdetails -->
     <string name="jd_jobdesc">Vacatureomschrijving</string>
     <string name="jd_wantedskills">Gewenste vaardigheden &amp; ervaring</string>
     <string name="jd_companydesc">Beschrijving van het bedrijf</string>
     <string name="menu_toggle_map">Mapweergave</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
