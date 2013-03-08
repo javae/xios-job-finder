@@ -67,15 +67,26 @@ public class SettingsFragment extends PreferenceFragment {
 		savedSearchPreference.setOnPreferenceChangeListener(new JobSearchHandler());
 		
 		CharSequence[] entries = new CharSequence[savedSearches.size()];
-		CharSequence[] entryValues = new CharSequence[savedSearches.size()];
 		int i = 0;
 		for (SearchBuilder savedSearch : savedSearches) {
-			entries[i] = savedSearch.getJobTitle();
-			entryValues[i] = savedSearch.getDbId() + "";
+			String savedSearchText = "";
+			if (StringUtil.isNotBlank(savedSearch.getKeywords())) {
+				savedSearchText = savedSearch.getKeywords();
+			} else if (StringUtil.isNotBlank(savedSearch.getJobTitle())) {
+				savedSearchText = savedSearch.getJobTitle();
+			} else if (StringUtil.isNotBlank(savedSearch.getJobFunction())) {
+				savedSearchText = savedSearch.getJobFunction();
+			} else if (StringUtil.isNotBlank(savedSearch.getIndustry())) {
+				savedSearchText = savedSearch.getIndustry();
+			} else {
+				savedSearchText = "Geen omschrijving";
+			}
+
+			entries[i] = savedSearchText;
 			i++;
 		}
 		savedSearchPreference.setEntries(entries);
-		savedSearchPreference.setEntryValues(entryValues);
+		savedSearchPreference.setEntryValues(entries);
 		
 		timeTaskPreference = (TimePreference) findPreference(resources.getString(R.string.key_time_task));
 		timeTaskPreference.setOnPreferenceChangeListener(new JobSearchHandler());
@@ -92,6 +103,7 @@ public class SettingsFragment extends PreferenceFragment {
 			if (preference.getKey().equals(resources.getString(R.string.key_saved_search))) {
 				ListPreference configIdPreference = (ListPreference) preference;
 				configIdPreference.setSummary((String) newValue);
+				savedSearchPreference.setSummary((String) newValue);
 			}
 			
 			if (preference.getKey().equals(resources.getString(R.string.key_display_alarm))) {
@@ -106,7 +118,7 @@ public class SettingsFragment extends PreferenceFragment {
 						Log.d(SettingsFragment.class.toString(), "Parsing of the selected time failed.", pe);
 					}
 				}
-			} else {
+			} else if (StringUtil.isNotBlank(savedSearchPreference.getValue())) {
 				try {
 					setAlarm(alarmManager);
 				} catch (ParseException pe) {
@@ -119,7 +131,9 @@ public class SettingsFragment extends PreferenceFragment {
 		
 		private void setAlarm(AlarmManager alarmManager) throws ParseException {
 			Intent jobSearchIntent = new Intent(getActivity().getApplicationContext(), JobSearchService.class);
-//			jobSearchIntent.putExtra(SELECTED_SAVED_SEARCH, savedSearches.get(savedSearchPreference.findIndexOfValue(savedSearchPreference.getValue())));
+			int savedSearchPosition = savedSearchPreference.findIndexOfValue(savedSearchPreference.getValue());
+			SearchBuilder savedSearch = savedSearchPosition < 0 ? new SearchBuilder() : savedSearches.get(savedSearchPosition);
+			jobSearchIntent.putExtra(SELECTED_SAVED_SEARCH, savedSearch);
 			pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 0, jobSearchIntent, 0);
 			
 			long day = 1000 * 24*3600;
@@ -130,10 +144,9 @@ public class SettingsFragment extends PreferenceFragment {
 			Calendar selectedTime = Calendar.getInstance();
 			selectedTime.setTimeInMillis(timeTaskPreference.getTime().getTime());
 	        
-//			calendar.set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY));
-//			calendar.set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE));
-			calendar.add(Calendar.SECOND, 5);
-			calendar.getTime();
+			calendar.set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY));
+			calendar.set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE));
+			calendar.set(Calendar.SECOND, 0);
 	        
 	        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), day, pendingIntent);
 	        Toast.makeText(getActivity(), "Alarm set", Toast.LENGTH_LONG).show();
