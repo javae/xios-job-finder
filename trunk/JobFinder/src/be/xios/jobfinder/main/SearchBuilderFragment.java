@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -40,6 +41,15 @@ public class SearchBuilderFragment extends Fragment {
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "search_fragment";
+	
+	public static final String PREFERENCE_IDENTIFIER = "be.xios.jobfinder.main.SearchBuilderFragment";
+	private final String key_keywords = "keywords";
+	private final String key_jobtitle = "jobtitle";
+	private final String key_country = "country";
+	private final String key_postalcode = "postalcode";
+	private final String key_distance = "distance";
+	private final String key_function = "function";
+	private final String key_industry = "industry";
 
 	private EditText keywords;
 	private EditText jobTitle;
@@ -92,6 +102,45 @@ public class SearchBuilderFragment extends Fragment {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCE_IDENTIFIER, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		
+		editor.putString(key_keywords, keywords.getText().toString());
+		editor.putString(key_jobtitle, jobTitle.getText().toString());
+		editor.putString(key_country, CountryData.getCountryList().get(country.getSelectedItemPosition()).getIso2());
+		editor.putString(key_postalcode, postalCode.getText().toString());
+		editor.putInt(key_distance, distance.getProgress());
+		editor.putInt(key_function, functions.getSelectedItemPosition());
+		editor.putInt(key_industry, industries.getSelectedItemPosition());
+		
+		editor.commit();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCE_IDENTIFIER, Context.MODE_PRIVATE);
+		
+		String keywords = preferences.getString(key_keywords, "");
+		String jobtitle = preferences.getString(key_jobtitle, "");
+		String country = preferences.getString(key_country, "");
+		String postalcode = preferences.getString(key_postalcode, "");
+		int distance = preferences.getInt(key_distance, 0);
+		int function = preferences.getInt(key_function, 0);
+		int industry = preferences.getInt(key_industry, 0);
+		
+		this.keywords.setText(keywords);
+		this.jobTitle.setText(jobtitle);
+		this.country.setSelection(CountryData.getCountryList().indexOf(country));
+		this.postalCode.setText(postalcode);
+		this.distance.setProgress(distance);
+		this.functions.setSelection(function);
+		this.industries.setSelection(industry);
+	}
+	
 	private void setLocationFields() {
 		String countryCode = null;
 
